@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-{% extends 'rango/base.html' %}
+{% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to Rango</h1>
-<form id="login_form" method="post" action="{% url 'rango:login' %}">
+<h1>Login to Dare2Ask</h1>
+<form id="login_form" method="post" action="{% url 'dare2ask:login' %}">
 	{% csrf_token %}
 	{{ Username.errors }}
 	{{ Password.errors }}

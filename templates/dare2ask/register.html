@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-{% extends 'rango/base.html' %}
+{% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -8,13 +8,13 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>Register for Rango</h1>
+	<h1>Register for Dare2Ask</h1>
 	{% if registered %}
-		Rango says: <strong>thank you for registering!</strong>
-		<a href="{% url 'rango:index' %}">Return to the homepage.</a><br />
+		<strong>Thank you for registering!</strong>
+		<a href="{% url 'dare2ask:index' %}">Return to the homepage.</a><br />
 	{% else %}
-		Rango says: <strong>register here!</strong><br />
-		<form id="user_form" method="post" action="{% url 'rango:register' %}" enctype="multipart/form-data">
+		<strong>Register here!</strong><br />
+		<form id="user_form" method="post" action="{% url 'dare2ask:register' %}" enctype="multipart/form-data">
 
 		{% csrf_token %}
 
