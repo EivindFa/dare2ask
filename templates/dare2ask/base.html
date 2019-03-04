@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load dare2ask_template_tags %} 
+{% load dare2ask_template_tags %}
 
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="{% static 'images/Logo.png' %}"> 
+  <link rel="icon" href="{% static 'images/Logo.png' %}">
   <title>
     Dare2Ask - {% block title %} THIS IS THE BASE TEMPLATE {% endblock %}
   </title>
   <!-- Bootstrap core CSS -->
   <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom styles for this template --> 
+  <!-- Custom styles for this template -->
   <link href= "http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-</head> 
+</head>
 
 <body>
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse"> 
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
   <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
           type="button"
           data-toggle="collapse"
@@ -28,57 +28,57 @@
           aria-controls="navbar"
           aria-expanded="false"
           aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span> 
+      <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="{% url 'index' %}">Dare2Ask</a>
 
-  <div class="collapse navbar-collapse" id="navbar"> 
+  <div class="collapse navbar-collapse" id="navbar">
     <ul class="navbar-nav mr-auto">
-      {% if user.is_authenticated %} 
+      {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'auth_logout' %}?next=/dare2ask/">
           Logout
-        </a> 
+        </a>
       </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'registration_register' %}">
           Register Here
-        </a> 
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'auth_login' %}">
-          Login 
+          Login
         </a>
       </li>
-      {% endif %} 
+      {% endif %}
     </ul>
-  </div> 
+  </div>
 </nav>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
           {% block sidebar_block %}
-            <a class="nav-link" href="{% url 'dare2ask/about' %}">
+            <a class="nav-link" href="{% url 'dare2ask:about' %}">
               About
             </a>
-          {% endblock %} 
+          {% endblock %}
     </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main"> 
+    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
           {% block body_block %}
           {% endblock %}
     </div>
-  </div> 
+  </div>
 </div>
 <!-- Bootstrap core JavaScript ================================================== -->
-<!-- Placed at the end of the document so the pages load faster --> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"> 
+<!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
     </script>
-    <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"> 
+    <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
     </script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
-    <script src= "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"> 
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src= "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
     </script>
-</body> 
+</body>
 </html>

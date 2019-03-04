@@ -5,15 +5,28 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from dare2ask.models import # models
-from dare2ask.forms import # forms
+#from dare2ask.models import # models
+#from dare2ask.forms import # forms
 
 from datetime import datetime
+
+#welcome/home
+#about
+#register – writes to database
+#login
+#join/create lecture
+#in lecture – writes to database
+#my profile
+#edit my profile – writes to database
+#logged out
+
 
 def index(request):
 	request.session.set_test_cookie()
 
 	visitor_cookie_handler(request)
+
+	context_dict = {}
 
 	# Obtain our response object early so we can add cookie info
 	response = render(request, 'dare2ask/index.html', context=context_dict)
@@ -26,6 +39,8 @@ def about(request):
 		print("TEST COOKIE WORKED!")
 		request.session.delete_test_cookie()
 
+	context_dict = {}
+	
 	visitor_cookie_handler(request)
 
 	return render(request, 'dare2ask/about.html', context=context_dict)
@@ -54,9 +69,3 @@ def visitor_cookie_handler(request):
 
 	# Update/set the visits cookie
 	request.session['visits'] = visits
-
-
-
-
-
-
