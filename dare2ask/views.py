@@ -5,8 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-#from dare2ask.models import # models
-#from dare2ask.forms import # forms
+from dare2ask.models import Lecture
+from dare2ask.forms import LectureForm
+from dare2ask.forms import UserForm, UserProfileForm
 
 from datetime import datetime
 
@@ -35,15 +36,42 @@ def index(request):
 	return response
 
 def about(request):
-	if request.session.test_cookie_worked():
-		print("TEST COOKIE WORKED!")
-		request.session.delete_test_cookie()
+#	if request.session.test_cookie_worked():
+#		print("TEST COOKIE WORKED!")
+#		request.session.delete_test_cookie()
 
 	context_dict = {}
-	
+
 	visitor_cookie_handler(request)
 
 	return render(request, 'dare2ask/about.html', context=context_dict)
+
+@login_required
+def lecture(request):
+    form = LectureForm()
+
+    # A HTTP Post?
+    if request.method == 'POST':
+        form = LectureForm(request.POST)
+
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            cat = form.save(commit=True)
+            # Now that the category is saved
+            # We could give a confirmation message
+            # Bit since he most recent category added is on the index page
+            # Then we can direct the user back to the index page.
+            return index(request)
+
+        else:
+            # The supplised form contained errors,
+            # Print errors to terminal.
+            print(form.errors)
+
+    # Will handle the bad form, new form, or no form supplied cases
+    # Will render the form with error messages
+    return render(request, 'dare2ask/lecture.html', {'form': form})
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
