@@ -2,6 +2,10 @@
 {% load staticfiles %}
 {% load dare2ask_template_tags %}
 
+<!-- To do list:
+  - Display who's logged in. "Logged in as XX" on top bar or something
+-->
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -71,7 +75,12 @@
     </div>
     <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
           {% block body_block %}
-            This is the body_block's default content.
+            This is the first body_block's default content.
+          {% endblock %}
+    </div>
+    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+          {% block body_block_2 %}
+            This is the second body_block's default content.
           {% endblock %}
     </div>
   </div>

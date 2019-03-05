@@ -26,3 +26,19 @@
     </form>
   </div>
 {% endblock %}
+
+{% block body_block_2 %}
+  <h1>Join a Lecture</h1>
+  <div>
+    {% if lectures %}
+      <ul>
+      {% for lecture in lectures %}
+        <li>
+          <a href="{{ lecture.slug }}">
+            {{ lecture.name }} </a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}

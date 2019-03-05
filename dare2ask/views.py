@@ -49,7 +49,7 @@ def about(request):
 @login_required
 def lecture(request):
     form = LectureForm()
-
+    lecture_list = Lecture.objects.order_by('-name')
     # A HTTP Post?
     if request.method == 'POST':
         form = LectureForm(request.POST)
@@ -69,9 +69,42 @@ def lecture(request):
             # Print errors to terminal.
             print(form.errors)
 
+    context_dict = {'lectures': lecture_list, 'form': form}
+
     # Will handle the bad form, new form, or no form supplied cases
     # Will render the form with error messages
-    return render(request, 'dare2ask/lecture.html', {'form': form})
+    return render(request, 'dare2ask/lecture.html', context_dict)
+
+def in_lecture(request, lecture_name_slug):
+
+    context_dict = {}
+
+    try:
+        # Look for category name slug with given name.
+        # If not found, raise DoesNotExist exception.
+        # So the .get() method returns one model instance or
+        # raises an exception.
+        lecture = Lecture.objects.get(slug = lecture_name_slug)
+
+        # Retrieve all of the associated questions.
+        # filter() will return a list of page objects or empty list
+        #pages = Page.objects.filter(category = category)
+
+        # Adds our results list to the template context under name pages.
+        #context_dict['pages'] = pages
+
+        # We also add the category object from the DB to the context
+        # dictionary. We'll use this in the template to verify that
+        # the category exists.
+        context_dict['lecture'] = lecture
+
+    except Lecture.DoesNotExist:
+        # We get here if we didn't find the specified category
+        # Template will display "no category" message
+        context_dict['lecture'] = None
+        #context_dict['pages'] = None
+
+    return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
