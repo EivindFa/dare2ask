@@ -3,7 +3,7 @@
 {% load dare2ask_template_tags %}
 
 <!-- To do list:
-  - Display who's logged in. "Logged in as XX" on top bar or something
+  - Make everything actually pretty using CSS
 -->
 
 <html lang="en">
@@ -16,7 +16,7 @@
   <link rel="icon" href="{% static 'images/Logo.png' %}">
   <title>
     Dare2Ask -
-    {% block title %}
+    {% block title_block %}
       BASE TITLE
     {% endblock %}
   </title>
@@ -37,7 +37,7 @@
           aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="{% url 'index' %}"><img src="static/images/Logo.png" width="82"></a>
+  <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/Logo.png' %}" width="82"></a>
 
   <div class="collapse navbar-collapse" id="navbar">
     <ul class="navbar-nav mr-auto">
@@ -70,7 +70,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
           {% block sidebar_block %}
-            <a class="nav-link" href="{% url 'dare2ask:about' %}">
+            <a class="nav-link" href="{% url 'dare2ask:about' %}" style="position:absolute;top:100px">
               About
             </a>
           {% endblock %}
@@ -80,11 +80,11 @@
             This is the body_block's default content.
           {% endblock %}
     </div>
-    <!-- <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main" style="position:absolute;top:400px">
           {% block body_block_2 %}
             This is the second body_block's default content.
           {% endblock %}
-    </div> -->
+    </div>
   </div>
 </div>
 <!-- Bootstrap core JavaScript ================================================== -->

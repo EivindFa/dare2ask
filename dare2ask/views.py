@@ -49,7 +49,7 @@ def about(request):
 @login_required
 def lecture(request):
     form = LectureForm()
-    lecture_list = Lecture.objects.order_by('-name')
+    lecture_list = Lecture.objects.order_by('-title')
     # A HTTP Post?
     if request.method == 'POST':
         form = LectureForm(request.POST)
