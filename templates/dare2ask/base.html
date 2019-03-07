@@ -15,10 +15,9 @@
   <meta name="author" content="">
   <link rel="icon" href="{% static 'images/Logo.png' %}">
   <title>
-    <br /><br /><br /><br /><br /><br /><br />
     Dare2Ask -
     {% block title %}
-      THIS IS THE BASE TEMPLATE
+      BASE TITLE
     {% endblock %}
   </title>
   <!-- Bootstrap core CSS -->
@@ -38,7 +37,7 @@
           aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="{% url 'index' %}">Dare2Ask</a>
+  <a class="navbar-brand" href="{% url 'index' %}"><img src="static/images/Logo.png" width="82"></a>
 
   <div class="collapse navbar-collapse" id="navbar">
     <ul class="navbar-nav mr-auto">
@@ -73,16 +72,16 @@
             </a>
           {% endblock %}
     </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main" style="position:absolute;top:100px">
           {% block body_block %}
-            This is the first body_block's default content.
+            This is the body_block's default content.
           {% endblock %}
     </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+    <!-- <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
           {% block body_block_2 %}
             This is the second body_block's default content.
           {% endblock %}
-    </div>
+    </div> -->
   </div>
 </div>
 <!-- Bootstrap core JavaScript ================================================== -->
