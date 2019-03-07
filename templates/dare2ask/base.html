@@ -47,6 +47,9 @@
           Logout
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link">Logged in as: {{ user.username }}</a>
+      </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'registration_register' %}">
