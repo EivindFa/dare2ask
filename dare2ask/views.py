@@ -49,7 +49,6 @@ def about(request):
 @login_required
 def lecture(request):
     form = LectureForm()
-    lecture_list = Lecture.objects.order_by('-name')
     # A HTTP Post?
     if request.method == 'POST':
         form = LectureForm(request.POST)
@@ -69,7 +68,16 @@ def lecture(request):
             # Print errors to terminal.
             print(form.errors)
 
-    context_dict = {'lectures': lecture_list, 'form': form}
+	# Check that a lecture exists.
+    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!####################################')
+    #print( list(Lecture.objects.all() ) )
+    try:
+        lecture_list = Lecture.objects.order_by('-title')
+    except Lecture.DoesNotExist:
+        lecture_list = ''
+
+
+    context_dict = {'lectures': '', 'form': form}
 
     # Will handle the bad form, new form, or no form supplied cases
     # Will render the form with error messages

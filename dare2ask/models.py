@@ -5,7 +5,7 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class Lecture(models.Model):
-    title = models.CharField(max_length=128, unique = True)
+    title = models.CharField(max_length=128, unique = False,) # Course name
     join_ID = models.IntegerField(default = -1)
     course_num = models.CharField(max_length=128, default = -1)
 
@@ -13,15 +13,16 @@ class Lecture(models.Model):
     max_length = 128
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = slugify(self.title)
         super(Lecture, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 class Question(models.Model):
-    lecture = models.ForeignKey(Lecture)    # Holds parent Lecture, one-to-many relationship
-    text = models.CharField(max_length=128)
+    lecture = models.ForeignKey(Lecture)    # Holds parent Lecture,
+                                            # one-to-many relationship
+    text = models.CharField(max_length=128) # Actual question
     upvotes = models.IntegerField(default = 0)
     answered = models.BooleanField(default = False)
 
@@ -30,7 +31,9 @@ class Question(models.Model):
 
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User) # Name of user
+	email = models.EmailField(max_length = 254, unique = True)
+	tutor = models.BooleanField(default = False)
 
 	# The additional attributes we wish to include
 	picture = models.ImageField(upload_to='profile_images', blank=True)
