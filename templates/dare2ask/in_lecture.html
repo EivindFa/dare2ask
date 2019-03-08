@@ -10,6 +10,14 @@
 {% block body_block %}
   <h1>Look at the questions!</h1>
   <div>
-    QUESTIONS WILL GO HERE
+    {% if lecture.questions %}
+      <ul>
+      {% for question in lecture.questions %}
+        <li>
+            {{ question.text }}
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
   </div>
 {% endblock %}
