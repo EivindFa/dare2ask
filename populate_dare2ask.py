@@ -4,10 +4,15 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 
 import django
 django.setup()
-from dare2ask.models import # models
+from dare2ask.models import Lecture, Question, UserProfile
 
 def populate():
 	# Populate
+
+def add_user():
+
+def add_lecture():
+	c =
 
 #Start execution here!
 if __name__ == '__main__':

@@ -48,20 +48,25 @@ def about(request):
 
 @login_required
 def lecture(request):
+    context_dict = {}
+
     form = LectureForm()
-    lecture_list = Lecture.objects.order_by('-name')
+
     # A HTTP Post?
     if request.method == 'POST':
         form = LectureForm(request.POST)
-
+        #print(form.title)
+        print('FLAG 1 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         # Have we been provided with a valid form?
         if form.is_valid():
+            print('FLAG 2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
             # Save the new category to the database.
             cat = form.save(commit=True)
             # Now that the category is saved
             # We could give a confirmation message
             # Bit since he most recent category added is on the index page
-            # Then we can direct the user back to the index page.
+
+			# Then we can direct the user back to the index page.
             return index(request)
 
         else:
@@ -69,7 +74,13 @@ def lecture(request):
             # Print errors to terminal.
             print(form.errors)
 
-    context_dict = {'lectures': lecture_list, 'form': form}
+    context_dict['form'] = form
+
+	# Check that a lecture exists.
+    try:
+        lecture_list = Lecture.objects.order_by('-name')
+    except Lecture.DoesNotExist:
+        context_dict['lecture'] = None
 
     # Will handle the bad form, new form, or no form supplied cases
     # Will render the form with error messages

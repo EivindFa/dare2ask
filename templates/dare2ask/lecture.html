@@ -17,11 +17,13 @@
       {% for hidden in form.hidden_fields %}
         {{ hidden }}
       {% endfor %}
-        {% for field in form.visible_fields %}
-          {{ field.errors }}
-          {{ field.help_text}}
-          {{ field }}
+      <!-- Creates text boxes for user input -->
+      {% for field in form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text}}
+        {{ field }}
       {% endfor %}
+      <!-- This is the button -->
       <input type="submit" name="submit" value="Create Lecture" />
     </form>
   </div>
@@ -35,7 +37,7 @@
       {% for lecture in lectures %}
         <li>
           <a href="{{ lecture.slug }}">
-            {{ lecture.name }} </a>
+            {{ lecture.title }} </a>
         </li>
       {% endfor %}
       </ul>
