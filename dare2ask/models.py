@@ -5,9 +5,7 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class Lecture(models.Model):
-    title = models.CharField(max_length=128, unique = True, default = 'abcd') # Course name
-    print('4')
-    print(title)
+    name = models.CharField(max_length=128, unique = True)
     join_ID = models.IntegerField(default = -1)
     print('5')
     print(join_ID)

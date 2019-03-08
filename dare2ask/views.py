@@ -78,7 +78,7 @@ def lecture(request):
 
 	# Check that a lecture exists.
     try:
-        lecture_list = Lecture.objects.order_by('-title')
+        lecture_list = Lecture.objects.order_by('-name')
     except Lecture.DoesNotExist:
         context_dict['lecture'] = None
 
