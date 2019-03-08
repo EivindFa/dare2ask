@@ -4,17 +4,15 @@ from dare2ask.models import Lecture
 from dare2ask.models import UserProfile
 
 class LectureForm(forms.ModelForm):
-    name = forms.CharField(max_length=Lecture.max_length,
-                help_text="Please enter the lecture room name.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    title = forms.CharField(max_length=Lecture.max_length,
+                help_text="Please enter the lecture room title.")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     # An inline metaclass to provide addiional info on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Lecture
-        fields = ('name',)
+        fields = ('title',)
 
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput())
