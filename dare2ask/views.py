@@ -56,10 +56,10 @@ def lecture(request):
     if request.method == 'POST':
         form = LectureForm(request.POST)
         #print(form.title)
-        print('FLAG 1 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        #print('FLAG 1 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         # Have we been provided with a valid form?
         if form.is_valid():
-            print('FLAG 2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            #print('FLAG 2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
             # Save the new category to the database.
             cat = form.save(commit=True)
             # Now that the category is saved
