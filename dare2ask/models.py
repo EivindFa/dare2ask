@@ -24,6 +24,7 @@ class Question(models.Model):
     text = models.CharField(max_length=128)
     upvotes = models.IntegerField(default = 0)
     answered = models.BooleanField(default = False)
+    max_length = 128
 
     def __str__(self):
         return self.text
