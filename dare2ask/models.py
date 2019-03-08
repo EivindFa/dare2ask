@@ -13,11 +13,11 @@ class Lecture(models.Model):
     max_length = 128
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = slugify(self.title)
         super(Lecture, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 class Question(models.Model):
     lecture = models.ForeignKey(Lecture)    # Holds parent Lecture, one-to-many relationship

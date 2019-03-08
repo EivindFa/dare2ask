@@ -49,7 +49,7 @@ def about(request):
 @login_required
 def lecture(request):
     form = LectureForm()
-    lecture_list = Lecture.objects.order_by('-name')
+    lecture_list = Lecture.objects.order_by('-title')
     # A HTTP Post?
     if request.method == 'POST':
         form = LectureForm(request.POST)
@@ -57,7 +57,7 @@ def lecture(request):
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new category to the database.
-            cat = form.save(commit=True)
+            lec = form.save(commit=True)
             # Now that the category is saved
             # We could give a confirmation message
             # Bit since he most recent category added is on the index page
