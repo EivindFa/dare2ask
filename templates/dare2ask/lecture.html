@@ -4,8 +4,11 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Create an if case for different user permissions.
-  Join a Lecture!
+  {% if user.is_staff %}
+    Create or Join a Lecture
+  {% else %}
+    Join a Jecture
+  {% endif %}
 {% endblock %}
 
 {% block body_block %}

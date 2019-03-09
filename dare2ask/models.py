@@ -29,6 +29,10 @@ class Question(models.Model):
     def __str__(self):
         return self.text
 
+class delete(models.Model):
+    delete = models.BooleanField(default = True)
+
+
 # Detailed
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.

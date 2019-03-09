@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from dare2ask.models import Lecture
-from dare2ask.forms import LectureForm
+from dare2ask.forms import LectureForm, deleteForm
 from dare2ask.forms import UserForm, UserProfileForm
 
 from datetime import datetime
@@ -28,7 +28,6 @@ def index(request):
 	visitor_cookie_handler(request)
 
 	context_dict = {}
-
 	# Obtain our response object early so we can add cookie info
 	response = render(request, 'dare2ask/index.html', context=context_dict)
 
@@ -95,7 +94,6 @@ def in_lecture(request, lecture_name_slug):
         # So the .get() method returns one model instance or
         # raises an exception.
         lecture = Lecture.objects.get(slug = lecture_name_slug)
-
         # Retrieve all of the associated questions.
         # filter() will return a list of page objects or empty list
         #pages = Page.objects.filter(category = category)
@@ -107,6 +105,26 @@ def in_lecture(request, lecture_name_slug):
         # dictionary. We'll use this in the template to verify that
         # the category exists.
         context_dict['lecture'] = lecture
+
+        form = deleteForm()
+        context_dict = {}
+
+        # A HTTP Post?
+        if request.method == 'GET':
+            form = deleteForm(request.GET)
+
+            # Have we been provided with a valid form?
+            if form.is_valid():
+                print('Valid form')
+                print(form.cleaned_data)
+                if (form.cleaned_data)['delete']:
+                    print('Delete form')
+                    return redirect('/dare2ask/about')
+
+            else:
+                # The supplised form contained errors,
+                # Print errors to terminal.
+                print(form.errors)
 
     except Lecture.DoesNotExist:
         # We get here if we didn't find the specified category

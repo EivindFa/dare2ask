@@ -13,3 +13,13 @@
     QUESTIONS WILL GO HERE
   </div>
 {% endblock %}
+
+{% block body_block_2 %}
+  {% if user.is_staff %}
+    <h1>Delete the lecture!</h1>
+    <form id="delete_form" \
+      method="GET" action="/dare2ask/in_lecture/">
+      <input type="submit" name="submit" value="Delete Lecture" />
+    </form>
+  {% endif %}
+{% endblock %}
