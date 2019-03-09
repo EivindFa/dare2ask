@@ -15,11 +15,12 @@ class LectureForm(forms.ModelForm):
         fields = ('title',)
 
 class UserForm(forms.ModelForm):
-	password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+    staff = forms.BooleanField(widget=forms.CheckboxInput())
 
-	class Meta:
-		model = User
-		fields = ('username', 'email', 'password')
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password', 'staff')
 
 class UserProfileForm(forms.ModelForm):
 	class Meta:
