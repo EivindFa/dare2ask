@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dare2ask',
     'registration',
-    #'bootstrap_toolkit'
+    'bootstrap_toolkit'
 ]
 
 MIDDLEWARE = [

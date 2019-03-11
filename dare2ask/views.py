@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -59,11 +59,13 @@ def lecture(request):
         if form.is_valid():
             # Save the new category to the database.
             lec = form.save(commit=True)
-            # Now that the category is saved
+            # Now that the lecture is saved
             # We could give a confirmation message
             # Bit since he most recent category added is on the index page
             # Then we can direct the user back to the index page.
-            return index(request)
+            print(form.cleaned_data)
+            return redirect('/dare2ask/lecture/' +
+                (form.cleaned_data)['title'] )
 
         else:
             # The supplised form contained errors,
