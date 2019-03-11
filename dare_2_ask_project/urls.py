@@ -24,7 +24,7 @@ from registration.backends.simple.views import RegistrationView
 # New class that redirects the user to the index page if successful at logging
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, user):
-        return '/dare2ask/'
+        return '/dare2ask/register_profile'
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
