@@ -7,6 +7,9 @@
 	</h2>
 	<form role="form"  method="post" action=".">
     	{% csrf_token %}
+    	{% for field in form.visible_fields %}
+                    {{ field.errors }}
+		{% endfor %}
 		<div class="form-group" >
 			<p class="required">
 				<label class="required" for="id_username">
