@@ -14,4 +14,8 @@ urlpatterns = [
 		views.lecture, name='lecture'),
 	url(r'^lecture/(?P<lecture_name_slug>[\w\-]+)/$',
 		views.in_lecture, name='in_lecture'),
+	url(r'^register_profile/$', 
+		views.register_profile, name='register_profile'),
+	url(r'^profile/(?P<username>[\w\-]+)/$', 
+		views.profile, name='profile'),
 ]

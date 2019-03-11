@@ -8,6 +8,9 @@
 	</div>
 	<form class="form-signin" role="form" method="post" action=".">
 		{% csrf_token %}
+		{% for field in form.visible_fields %}
+                    {{ field.errors }}
+		{% endfor %}
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<label for="inputUsername" class="sr-only">Username</label>
 		<input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>

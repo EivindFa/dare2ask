@@ -18,7 +18,6 @@
 	<ul>
 		{% if user.is_authenticated %}
 			<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
-			<li><a href = "accounts/password/change">Change Password</a></li>
 			<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
 		{% endif %}
 		<a href="{% url 'index' %}">Index</a><br />
