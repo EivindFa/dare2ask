@@ -95,6 +95,8 @@ def in_lecture(request, lecture_name_slug):
         # So the .get() method returns one model instance or
         # raises an exception.
         lecture = Lecture.objects.get(slug = lecture_name_slug)
+        print("In lec")
+        print(lecture)
         # Retrieve all of the associated questions.
         # filter() will return a list of page objects or empty list
         #pages = Page.objects.filter(category = category)
@@ -108,7 +110,6 @@ def in_lecture(request, lecture_name_slug):
         context_dict['lecture'] = lecture
 
         form = deleteForm()
-        context_dict = {}
 
         # A HTTP Post?
         if request.method == 'GET':
@@ -131,6 +132,7 @@ def in_lecture(request, lecture_name_slug):
         # We get here if we didn't find the specified category
         # Template will display "no category" message
         context_dict['lecture'] = None
+        print('context_dict["lecture"]= None')
         #context_dict['pages'] = None
 
     return render(request, 'dare2ask/in_lecture.html', context=context_dict)
