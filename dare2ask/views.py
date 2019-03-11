@@ -4,8 +4,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
-from dare2ask.models import Lecture
+from dare2ask.models import Lecture, UserProfile
 from dare2ask.forms import LectureForm
 from dare2ask.forms import UserForm, UserProfileForm
 
@@ -159,3 +160,25 @@ def register_profile(request):
 	context_dict = {'form':form}
 
 	return render(request, 'dare2ask/profile_registration.html', context_dict)
+
+@login_required
+def profile(request, username):
+	try:
+		user = User.objects.get(username=username)
+	except User.DoesNotExist:
+		return redirect('index')
+
+	userprofile = UserProfile.objects.get_or_create(user=user)[0]
+	form = UserProfileForm(
+		{'picture': userprofile.picture})
+
+	if request.method == 'POST':
+		form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+		if form.is_valid():
+			form.save(commit=True)
+			return redirect('profile', user.username)
+		else:
+			print(form.errors)
+
+	return render(request, 'dare2ask/profile.html',
+		{'userprofile': userprofile, 'selecteduser': user, 'form': form})
