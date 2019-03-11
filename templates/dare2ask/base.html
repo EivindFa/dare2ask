@@ -48,7 +48,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'dare2ask:profile' user.username %}">Logged in as: {{ user.username }}</a>
+        <a class="nav-link" href="{% url 'dare2ask:profile' user.username %}">Logged in as: {{ user.username }}           <img src="{{ MEDIA_URL }}{{ userprofile.picture }}" with="30" height="30"></a>
       </li>
       {% else %}
       <li class="nav-item">
