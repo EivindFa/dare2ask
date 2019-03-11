@@ -176,7 +176,7 @@ def profile(request, username):
 		form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
 		if form.is_valid():
 			form.save(commit=True)
-			return redirect('profile', user.username)
+			return redirect('dare2ask:profile', user.username)
 		else:
 			print(form.errors)
 
