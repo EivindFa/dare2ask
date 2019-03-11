@@ -10,28 +10,32 @@
 
 {% block body_block %}
   <h1>Create a Lecture</h1>
-  <div>
-    <form id="lecture_form" \
-    method="post" action="/dare2ask/lecture/">
-      {% csrf_token %}
-      {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-      {% endfor %}
-        {% for field in form.visible_fields %}
-          {{ field.errors }}
-          {{ field.help_text}}
-          {{ field }}
-      {% endfor %}
-      <input type="submit" name="submit" value="Create Lecture" />
-    </form>
-  </div>
+  {% if user.is_staff %}
+    You are staff!
+    <div>
+      <form id="lecture_form" \
+      method="post" action="/dare2ask/lecture/">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+          {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text}}
+            {{ field }}
+        {% endfor %}
+        <input type="submit" name="submit" value="Create Lecture" />
+      </form>
+    </div>
+  {% else %}
+    You are not staff! You can't create a lecture :(
+  {% endif %}
 {% endblock %}
 
 {% block body_block_2 %}
   <h1>Join a Lecture</h1>
   <div>
     {% if lectures %}
-      Lecture exist!
       <ul>
       {% for lecture in lectures %}
         <li>
@@ -40,6 +44,8 @@
         </li>
       {% endfor %}
       </ul>
+    {% else %}
+      No lectures open right now!
     {% endif %}
   </div>
 {% endblock %}

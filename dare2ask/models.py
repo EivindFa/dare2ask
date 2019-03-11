@@ -2,8 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-# Create your models here.
-
+# Lecturers can create lectures. Within, questions can be interacted with.
 class Lecture(models.Model):
     title = models.CharField(max_length=128, unique = True)
     join_ID = models.IntegerField(default = -1)
@@ -19,8 +18,10 @@ class Lecture(models.Model):
     def __str__(self):
         return self.title
 
+# For the questions that will be polled from students within a lecture.
 class Question(models.Model):
-    lecture = models.ForeignKey(Lecture)    # Holds parent Lecture, one-to-many relationship
+    # Holds parent Lecture, one-to-many relationship
+    lecture = models.ForeignKey(Lecture)
     text = models.CharField(max_length=128)
     upvotes = models.IntegerField(default = 0)
     answered = models.BooleanField(default = False)
@@ -28,6 +29,7 @@ class Question(models.Model):
     def __str__(self):
         return self.text
 
+# Detailed
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.
 	user = models.OneToOneField(User)
