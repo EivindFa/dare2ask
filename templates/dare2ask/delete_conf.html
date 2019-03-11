@@ -5,7 +5,7 @@
 
 {% block title_block %}
   {% if lecture.title %}
-    {{ lecture.title }}
+    Delete {{ lecture.title }}
   {% else %}
     Lecture not found
   {% endif %}
@@ -13,25 +13,19 @@
 
 {% block body_block %}
   {% if lecture.title %}
-    <h1>Look at the questions!</h1>
+    <h1>Delete {{ lecture.title }}</h1>
     <div>
-      QUESTIONS WILL GO HERE
+      Are you sure you want to delete the lecture, [{{ lecture.title }}]?
+      <button onclick="window.location.href =
+        '/dare2ask/delete/{{lecture.slug}}';">Delete!</button>
+      <button onclick="window.location.href =
+          '/dare2ask/lecture/{{lecture.slug}}';">No!</button>
     </div>
   {% else %}
     <h1>Lecture not found!</h1>
     <div>
-      A lecture with this name does not exist. </br>
+      Can't delete a lecture that doesn't exist!</br>
       <a href = "{% url 'dare2ask:lecture' %}">Try another </a>
     </div>
-  {% endif %}
-{% endblock %}
-
-{% block body_block_2 %}
-  {% if lecture.title %}
-    {% if user.is_staff %}
-      <h1>Delete the lecture!</h1>
-      <button onclick="window.location.href =
-        '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
-    {% endif %}
   {% endif %}
 {% endblock %}

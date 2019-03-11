@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from dare2ask.models import Lecture, delete
+from dare2ask.models import Lecture
 from dare2ask.models import UserProfile
 
 class LectureForm(forms.ModelForm):
@@ -14,10 +14,6 @@ class LectureForm(forms.ModelForm):
         model = Lecture
         fields = ('title',)
 
-class deleteForm(forms.ModelForm):
-    class Meta:
-        model = delete
-        fields = ('delete', )
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from dare2ask.models import Lecture, UserProfile
-from dare2ask.forms import LectureForm, deleteForm
+from dare2ask.forms import LectureForm
 from dare2ask.forms import UserForm, UserProfileForm
 
 from datetime import datetime
@@ -90,7 +90,7 @@ def in_lecture(request, lecture_name_slug):
     context_dict = {}
 
     try:
-        # Look for category name slug with given name.
+        # Look for lecture name slug with given name.
         # If not found, raise DoesNotExist exception.
         # So the .get() method returns one model instance or
         # raises an exception.
@@ -109,24 +109,6 @@ def in_lecture(request, lecture_name_slug):
         # the category exists.
         context_dict['lecture'] = lecture
 
-        form = deleteForm()
-
-        # A HTTP Post?
-        if request.method == 'GET':
-            form = deleteForm(request.GET)
-
-            # Have we been provided with a valid form?
-            if form.is_valid():
-                print('Valid form')
-                print(form.cleaned_data)
-                if (form.cleaned_data)['delete']:
-                    print('Delete form')
-                    return redirect('/dare2ask/about')
-
-            else:
-                # The supplised form contained errors,
-                # Print errors to terminal.
-                print(form.errors)
 
     except Lecture.DoesNotExist:
         # We get here if we didn't find the specified category
@@ -136,6 +118,24 @@ def in_lecture(request, lecture_name_slug):
         #context_dict['pages'] = None
 
     return render(request, 'dare2ask/in_lecture.html', context=context_dict)
+
+@login_required
+def delete_conf(request, lecture_name_slug):
+    context_dict = {}
+
+    try:
+        lecture = Lecture.objects.get(slug = lecture_name_slug)
+
+        context_dict['lecture'] = lecture
+
+    except Lecture.DoesNotExist:
+        context_dict['lecture'] = None
+        print('context_dict["lecture"]= None')
+    return render(request, 'dare2ask/delete_conf.html', context_dict)
+
+def delete(request, lecture_name_slug):
+    lec = get_object_or_404(Lecture, slug = lecture_name_slug).delete()
+    return HttpResponseRedirect('/dare2ask')
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
