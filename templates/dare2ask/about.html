@@ -2,7 +2,7 @@
 
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/styling.css' %}">
 {% block title_block %}
 	About Dare2Ask!
 {% endblock %}
@@ -11,16 +11,18 @@
 	<div>
 		<h1> Dev Team</h1>
 		<div class= "aboutUs">
-			<h3>About the project </h3>
+			<h3>About the project</h3>
 			<p>
 				A project in WAD2 building a website.
 				Real time forum app for students to ask questions in lectures.
-				bla bla
-				test test
+
 			</p>
 		</div>
+
 			<div class="dev">
 				<h3>Developer 1</h3>
+					<img src="{% static "images/developer.png" %}"
+				alt="Picture of developer"/>
 				<p>
 				Stronger unpacked felicity to of mistaken. Fanny at wrong table ye in. Be on easily cannot innate in lasted months on. Differed and and felicity steepest mrs age outweigh. Opinions learning likewise daughter now age outweigh.
 			</p>
@@ -28,6 +30,8 @@
 
 			<div class="dev">
 				<h3>Developer 2</h3>
+					<img src="{% static "images/developer.png" %}"
+				alt="Picture of developer"/>
 				<p>
 				Stronger unpacked felicity to of mistaken. Fanny at wrong table ye in. Be on easily cannot innate in lasted months on. Differed and and felicity steepest mrs age outweigh.
 			</p>
@@ -35,6 +39,9 @@
 
 			<div class="dev">
 				<h3>Developer 3</h3>
+
+				<img src="{% static "images/developer.png" %}"
+				alt="Picture of developer"/>
 				<p>
 				Stronger unpacked felicity to of mistaken. Fanny at wrong table ye in. Be on easily cannot innate in lasted months on. Differed and and felicity steepest mrs age outweigh.
 			</p>
