@@ -33,11 +33,12 @@ class Question(models.Model):
 # Detailed
 class UserProfile(models.Model):
 	# This line is required. Links UserProfile to a User model instance.
-	user = models.OneToOneField(User)
+    user = models.OneToOneField(User)
 
 	# The additional attributes we wish to include
-	picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True, default='../static/images/default.png')
+    lecturer = models.BooleanField(default = False)
 
 	# Override the __unicode__() method to return out something meaningful!
-	def __str__(self):
-		return self.user.username
+    def __str__(self):
+	    return self.user.username
