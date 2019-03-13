@@ -16,6 +16,7 @@ class LectureForm(forms.ModelForm):
 
 class QuestionForm(forms.ModelForm):
     text = forms.CharField(max_length=Question.max_length, help_text="Please enter your question.")
+    #lecture = Lecture.objects.filter(title="abc")
 
     class Meta:
         model = Question

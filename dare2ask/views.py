@@ -79,16 +79,6 @@ def lecture(request):
 def in_lecture(request, lecture_name_slug):
 	form = QuestionForm()
 	context_dict = {'form': form}
-	if request.method == 'POST':
-		print("POSTING \nPOSTING")
-		form = QuestionForm(request.POST)
-		if form.is_valid():
-			q = form.save(commit=True)
-			return index(request)
-		else:
-			print("QUESTION NOT SAVED")
-			print(form.errors)
-
 	try:
 		# Look for lecture name slug with given name.
 		# If not found, raise DoesNotExist exception.
@@ -111,6 +101,15 @@ def in_lecture(request, lecture_name_slug):
 		# We get here if we didn't find the specified category
 		# Template will display "no category" message
 		context_dict['lecture'] = None
+
+	if request.method == 'POST':
+		form = QuestionForm(request.POST)
+		if form.is_valid():
+			q = form.save(commit=False)
+			q.lecture = context_dict['lecture']
+			q.save()
+		else:
+			print(form.errors)
 
 	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 
