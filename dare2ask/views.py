@@ -113,13 +113,31 @@ def in_lecture(request, lecture_name_slug):
 		context_dict['lecture'] = None
 
 	if request.method == 'POST':
-		form = QuestionForm(request.POST)
-		if form.is_valid():
-			q = form.save(commit=False)
-			q.lecture = context_dict['lecture']
-			q.save()
+		print("REQUEST=",request.body,"\n",request.POST)
+		if "create_question" in request.POST:
+			form = QuestionForm(request.POST)
+			if form.is_valid():
+				q = form.save(commit=False)
+				q.lecture = context_dict['lecture']
+				q.save()
+			else:
+				print(form.errors)
+		elif "upvote_question" in request.POST:
+			# Get the current question
+			i = int(request.POST['upvote_question'])-1
+			question = context_dict["questions"][i]
+			question.upvotes += 1
+			question.save()
+		elif "answered_question" in request.POST:
+			i = int(request.POST['answered_question'])-1
+			question = context_dict["questions"][i]
+			if question.answered == True:
+				question.answered = False
+			else:
+				question.answered = True
+			question.save()
 		else:
-			print(form.errors)
+			print("UNRECOGNIZED")
 
 	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 

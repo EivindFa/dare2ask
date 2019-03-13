@@ -20,7 +20,7 @@
         {{ field.help_text}}
         {{ field }}
       {% endfor %}
-      <input type="submit" name="submit" value="Create Question" />
+      <input type="submit" name="create_question" value="Create Question" />
     </form>
   </div>
   <div>
@@ -28,7 +28,28 @@
       <h3>Questions:</h3>
       <ul>
         {% for question in questions %}
-          <li>{{ question.text }}</li>
+          <li>
+            {{ question.text }}
+            <br>Votes: {{ question.upvotes }}
+            <!-- Upvote form only visible to students -->
+            <form id="upvote" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+              {% csrf_token %}
+              <button type="submit" value="{{forloop.counter}}" name="upvote_question">Upvote</button>
+            </form>
+            {% if question.answered %} Answered
+            {% else %} Unanswered
+            {% endif %}
+            <!-- Answered form only visible to instructors -->
+            <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+              {% csrf_token %}
+              <button type="submit" name="answered_question" value="{{forloop.counter}}">
+                Mark
+                {% if question.answered %} Unanswered
+                {% else %} Answered
+                {% endif %}
+              </button>
+            </form>
+          </li>
         {% endfor %}
       </ul>
     {% else %}
