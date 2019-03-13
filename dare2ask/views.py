@@ -151,13 +151,14 @@ def visitor_cookie_handler(request):
 @login_required
 def register_profile(request):
 	form = UserProfileForm()
-
 	if request.method == 'POST':
 		form = UserProfileForm(request.POST, request.FILES)
 		if form.is_valid():
 			user_profile = form.save(commit=False)
 			user_profile.user = request.user
 			user_profile.save()
+			# if form.lecturer:
+			# 	userprofile.lecturer = True
 
 			return redirect('index')
 		else:
@@ -176,7 +177,7 @@ def profile(request, username):
 
 	userprofile = UserProfile.objects.get_or_create(user=user)[0]
 	form = UserProfileForm(
-		{'picture': userprofile.picture})
+		{'picture': userprofile.picture, 'lecturer': userprofile.lecturer})
 
 	if request.method == 'POST':
 		form = UserProfileForm(request.POST, request.FILES, instance=userprofile)

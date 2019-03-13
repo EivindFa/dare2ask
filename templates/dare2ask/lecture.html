@@ -10,7 +10,7 @@
 
 {% block body_block %}
   <h1>Create a Lecture</h1>
-  {% if user.is_staff %}
+  {% if user.userprofile.lecturer %}
     You are staff!
     <div>
       <form id="lecture_form" \
