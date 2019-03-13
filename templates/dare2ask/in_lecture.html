@@ -4,12 +4,35 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  {{ lecture.name }}
+  {{ lecture.title }}
 {% endblock %}
 
 {% block body_block %}
-  <h1>Look at the questions!</h1>
+  <h1>{{ lecture.title }}</h1>
   <div>
-    QUESTIONS WILL GO HERE
+    <form id="question_form" method="post" action="/dare2ask/">
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+      {% endfor %}
+      {% for field in form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text}}
+        {{ field }}
+      {% endfor %}
+      <input type="submit" name="submit" value="Create Question" />
+    </form>
+  </div>
+  <div>
+    {% if questions %}
+      <h3>Questions:</h3>
+      <ul>
+        {% for question in questions %}
+          <li>{{ question.text }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div>No questions have been asked</div>
+    {% endif %}
   </div>
 {% endblock %}
