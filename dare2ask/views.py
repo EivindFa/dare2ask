@@ -3,25 +3,15 @@ from django.core.urlresolvers import reverse
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from dare2ask.models import Lecture, UserProfile
 from dare2ask.forms import LectureForm
 from dare2ask.forms import UserForm, UserProfileForm
+from dare2ask.decorators import is_staff
 
 from datetime import datetime
-
-#welcome/home
-#about
-#register – writes to database
-#login
-#join/create lecture
-#in lecture – writes to database
-#my profile
-#edit my profile – writes to database
-#logged out
-
 
 def index(request):
 	request.session.set_test_cookie()
@@ -35,6 +25,7 @@ def index(request):
 	# Return response back to the user, updating any cookies that needed change
 	return response
 
+#@is_staff
 def about(request):
 #	if request.session.test_cookie_worked():
 #		print("TEST COOKIE WORKED!")
@@ -119,7 +110,7 @@ def in_lecture(request, lecture_name_slug):
 
     return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 
-@login_required
+#@is_staff
 def delete_conf(request, lecture_name_slug):
     context_dict = {}
 
