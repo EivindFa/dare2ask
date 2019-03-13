@@ -10,7 +10,7 @@
 {% block body_block %}
   <h1>{{ lecture.title }}</h1>
   <div>
-    <form id="question_form" method="post" action="/dare2ask/">
+    <form id="question_form" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
       {% csrf_token %}
       {% for hidden in form.hidden_fields %}
         {{ hidden }}
