@@ -25,14 +25,15 @@ class QuestionForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    staff = forms.BooleanField(widget=forms.CheckboxInput())
+    # is_staff = forms.BooleanField(widget=forms.CheckboxInput())
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'staff')
+        fields = ('username', 'email', 'password', 'is_staff')
 
 class UserProfileForm(forms.ModelForm):
     picture = forms.ImageField(required=False)
+    lecturer = forms.BooleanField(widget=forms.CheckboxInput(), required=False)
 
     class Meta:
 	    model = UserProfile
