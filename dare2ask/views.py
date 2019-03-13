@@ -104,7 +104,7 @@ def in_lecture(request, lecture_name_slug):
 
 	if request.method == 'POST':
 		print("REQUEST=",request.body,"\n",request.POST)
-		if "create_question" in request.POST:
+		if "Create Question" in request.POST.get('create_question', 'None'):
 			form = QuestionForm(request.POST)
 			if form.is_valid():
 				q = form.save(commit=False)
@@ -114,6 +114,7 @@ def in_lecture(request, lecture_name_slug):
 				print(form.errors)
 		elif "upvote_question" in request.POST:
 			# Get the current question
+
 			i = int(request.POST['upvote_question'])-1
 			question = context_dict["questions"][i]
 			question.upvotes += 1
