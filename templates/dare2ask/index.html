@@ -4,19 +4,14 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	<div>
-		<br /><br /><br /><br /><br /><br />
-	</div>
 	Dare2Ask!
 {% endblock %}
 
 {% block body_block %}
 <div>
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 	<ul>
 		{% if user.is_authenticated %}
+			<h1>Hi, {{user}}, welcome to Dare2Ask! </br> </h1>
 			<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
 			<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
 		{% endif %}

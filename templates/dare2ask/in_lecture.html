@@ -4,56 +4,80 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  {{ lecture.title }}
+  {% if lecture.title %}
+    {{ lecture.title }}
+  {% else %}
+    Lecture not found
+  {% endif %}
 {% endblock %}
 
 {% block body_block %}
-  <h1>{{ lecture.title }}</h1>
-  <div>
-    <form id="question_form" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
-      {% csrf_token %}
-      {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-      {% endfor %}
-      {% for field in form.visible_fields %}
-        {{ field.errors }}
-        {{ field.help_text}}
-        {{ field }}
-      {% endfor %}
-      <input type="submit" name="create_question" value="Create Question" />
-    </form>
-  </div>
-  <div>
-    {% if questions %}
-      <h3>Questions:</h3>
-      <ul>
-        {% for question in questions %}
-          <li>
-            {{ question.text }}
-            <br>Votes: {{ question.upvotes }}
-            <!-- Upvote form only visible to students -->
-            <form id="upvote" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
-              {% csrf_token %}
-              <button type="submit" value="{{forloop.counter}}" name="upvote_question">Upvote</button>
-            </form>
-            {% if question.answered %} Answered
-            {% else %} Unanswered
-            {% endif %}
-            <!-- Answered form only visible to instructors -->
-            <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
-              {% csrf_token %}
-              <button type="submit" name="answered_question" value="{{forloop.counter}}">
-                Mark
-                {% if question.answered %} Unanswered
-                {% else %} Answered
-                {% endif %}
-              </button>
-            </form>
-          </li>
+  {% if lecture.title %}
+    <h1>{{ lecture.title }}</h1>
+    <div>
+      <form id="question_form" method="post"
+        action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+          {{ hidden }}
         {% endfor %}
-      </ul>
-    {% else %}
-      <div>No questions have been asked</div>
+        {% for field in form.visible_fields %}
+          {{ field.errors }}
+          {{ field.help_text}}
+          {{ field }}
+        {% endfor %}
+        <input type="submit" name="create_question" value="Create Question" />
+      </form>
+    </div>
+    <div>
+      {% if questions %}
+        <h3>Questions:</h3>
+        <ul>
+          {% for question in questions %}
+            <li>
+              {{ question.text }}
+              <br>Votes: {{ question.upvotes }}
+              <!-- Upvote form only visible to students -->
+              <form id="upvote" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+                {% csrf_token %}
+                <button type="submit" value="{{forloop.counter}}" name="upvote_question">Upvote</button>
+              </form>
+              {% if question.answered %} Answered
+              {% else %} Unanswered
+              {% endif %}
+              <!-- Answered form only visible to instructors -->
+              <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+                {% csrf_token %}
+                <button type="submit" name="answered_question" value="{{forloop.counter}}">
+                  Mark
+                  {% if question.answered %} Unanswered
+                  {% else %} Answered
+                  {% endif %}
+                </button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+
+      {% else %}
+        <div>No questions have been asked</div>
+      {% endif %}
+    </div>
+  {% else %}
+    <h1>Lecture not found!</h1>
+    <div>
+      A lecture with this name does not exist. </br>
+      <a href = "{% url 'dare2ask:lecture' %}">Try another </a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block body_block_2 %}
+  {% if lecture.title %}
+    {% if user.is_staff %}
+      <h1>Delete the lecture!</h1>
+      <button onclick="window.location.href =
+        '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
     {% endif %}
-  </div>
+  {% endif %}
 {% endblock %}

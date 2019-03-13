@@ -1,27 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from dare2ask.models import Lecture, UserProfile, Question
 from dare2ask.forms import LectureForm, QuestionForm
 from dare2ask.forms import UserForm, UserProfileForm
+from dare2ask.decorators import is_staff
 
 from datetime import datetime
-
-#welcome/home
-#about
-#register – writes to database
-#login
-#join/create lecture
-#in lecture – writes to database
-#my profile
-#edit my profile – writes to database
-#logged out
-
 
 def index(request):
 	request.session.set_test_cookie()
@@ -29,13 +19,13 @@ def index(request):
 	visitor_cookie_handler(request)
 
 	context_dict = {}
-
 	# Obtain our response object early so we can add cookie info
 	response = render(request, 'dare2ask/index.html', context=context_dict)
 
 	# Return response back to the user, updating any cookies that needed change
 	return response
 
+#@is_staff
 def about(request):
 #	if request.session.test_cookie_worked():
 #		print("TEST COOKIE WORKED!")
@@ -114,7 +104,7 @@ def in_lecture(request, lecture_name_slug):
 
 	if request.method == 'POST':
 		print("REQUEST=",request.body,"\n",request.POST)
-		if "create_question" in request.POST:
+		if "Create Question" in request.POST.get('create_question', 'None'):
 			form = QuestionForm(request.POST)
 			if form.is_valid():
 				q = form.save(commit=False)
@@ -124,6 +114,7 @@ def in_lecture(request, lecture_name_slug):
 				print(form.errors)
 		elif "upvote_question" in request.POST:
 			# Get the current question
+
 			i = int(request.POST['upvote_question'])-1
 			question = context_dict["questions"][i]
 			question.upvotes += 1
@@ -140,6 +131,24 @@ def in_lecture(request, lecture_name_slug):
 			print("UNRECOGNIZED")
 
 	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
+
+#@is_staff
+def delete_conf(request, lecture_name_slug):
+    context_dict = {}
+
+    try:
+        lecture = Lecture.objects.get(slug = lecture_name_slug)
+
+        context_dict['lecture'] = lecture
+
+    except Lecture.DoesNotExist:
+        context_dict['lecture'] = None
+        print('context_dict["lecture"]= None')
+    return render(request, 'dare2ask/delete_conf.html', context_dict)
+
+def delete(request, lecture_name_slug):
+    lec = get_object_or_404(Lecture, slug = lecture_name_slug).delete()
+    return HttpResponseRedirect('/dare2ask')
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
