@@ -36,7 +36,7 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 
 	# The additional attributes we wish to include
-	picture = models.ImageField(upload_to='profile_images', blank=True)
+	picture = models.ImageField(upload_to='profile_images', blank=True, default='../static/images/default.png')
 
 	# Override the __unicode__() method to return out something meaningful!
 	def __str__(self):
