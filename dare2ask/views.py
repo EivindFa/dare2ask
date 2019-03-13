@@ -118,10 +118,9 @@ def in_lecture(request, lecture_name_slug):
 			q = form.save(commit=False)
 			q.lecture = context_dict['lecture']
 			q.save()
-			return index(request)
 		else:
 			print(form.errors)
-			
+
 	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 
 # A helper method
