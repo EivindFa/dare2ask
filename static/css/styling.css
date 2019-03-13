@@ -1,9 +1,15 @@
+/*
+    Styling for about.html
+*/
+
 .aboutUs{
   margin:20px;
   padding-bottom: 20px;
 }
 
-
+/*
+    Three columns
+*/
 .dev{
   float:right;
   width:33.3%;
@@ -13,5 +19,16 @@
   padding-left:7px;
   padding-right: 7px;
   padding-bottom: 15px;
+}
+
+.dev img{
+  position: relative;
+  left:70px;
+  height: 100px;
+  width: 100px;
 
 }
+
+/*
+    Styling index.html
+*/
