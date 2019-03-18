@@ -18,6 +18,17 @@ Instructions for setting up the project on my own computer. See deployment for n
 
 Not done..
 
+## Running the app locally
+To run the server, use:
+'''
+python manage.py runserver
+'''
+
+If you get an error saying that you have unapplied migrations, run the following commands:
+'''
+python manage.py migrate
+'''
+
 ## Built with
 * [Django] (https://www.djangoproject.com/) - The web framework used
 * [Conda] (https://conda.io/en/latest/) - Virtual Environment
