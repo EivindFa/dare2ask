@@ -216,3 +216,18 @@ def profile(request, username):
 
 	return render(request, 'dare2ask/profile.html',
 		{'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+
+@login_required
+def like_question(request):
+	l_id = None; # l_id == like_id
+	if request.method == 'GET':
+		l_id = request.GET['like_id'];  # getting "like_id" from the button in ajax.js
+		likes = 0;
+		if l_id:
+			like = Question.objects.get(id=int(l_id));
+			if like:
+				likes = like.upvotes + 1;
+				like.upvotes = likes;
+				like.save();
+	return HttpResponse(likes);

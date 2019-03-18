@@ -36,12 +36,27 @@
           {% for question in questions %}
             <li>
               {{ question.text }}
+
+              <!--
               <br>Votes: {{ question.upvotes }}
-              <!-- Upvote form only visible to students -->
+              <!-- Upvote form only visible to students
               <form id="upvote" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
                 {% csrf_token %}
                 <button type="submit" value="{{forloop.counter}}" name="upvote_question">Upvote</button>
               </form>
+            -->
+
+            <!-- AJAX button goes here -->
+            <div>
+              <strong id="like_count"> {{ question.upvotes }}</strong>
+              <button id="likes" data-upvoteid="{{question.id}}"
+                class="btn btn-primary btn-sm" type="button">
+                Like
+              </button>
+            </div>
+            <!-- END ajax button -->
+
+
               {% if question.answered %} Answered
               {% else %} Unanswered
               {% endif %}
