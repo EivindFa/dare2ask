@@ -112,13 +112,13 @@ def in_lecture(request, lecture_name_slug):
 				q.save()
 			else:
 				print(form.errors)
-		elif "upvote_question" in request.POST:
+				'''elif "upvote_question" in request.POST:
 			# Get the current question
-
+			print("UPVOTING")
 			i = int(request.POST['upvote_question'])-1
-			question = context_dict["questions"][i]
+			question = context_dict["questions"][0]
 			question.upvotes += 1
-			question.save()
+			question.save()'''
 		elif "answered_question" in request.POST:
 			i = int(request.POST['answered_question'])-1
 			question = context_dict["questions"][i]
@@ -216,3 +216,27 @@ def profile(request, username):
 
 	return render(request, 'dare2ask/profile.html',
 		{'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+
+@login_required
+def like_question(request):
+	l_id = None; # l_id == like_id
+	if request.method == 'GET':
+		l_id = request.GET['like_id'];  # getting "like_id" from the button in ajax.js
+		likes = 0;
+		all_likes = ""
+		if l_id:
+			q = Question.objects.get(id=int(l_id));
+			if q:
+				likes = q.upvotes + 1;
+				q.upvotes = likes;
+				q.save();
+				# Get parent lecture of question
+				l = q.lecture
+				# Get all questions with this parent lecture
+				all_qs = Question.objects.filter(lecture=l)
+				for n in all_qs:
+					print(n.upvotes)
+					all_likes += str(n.upvotes)
+					all_likes += " "
+	return HttpResponse(all_likes)

@@ -22,4 +22,5 @@ urlpatterns = [
 		views.register_profile, name='register_profile'),
 	url(r'^profile/(?P<username>[\w\-]+)/$',
 		views.profile, name='profile'),
+	url(r'^like/$', views.like_question, name='like_question'), # temporary like id for AJAX - EF
 ]
