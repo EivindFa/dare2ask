@@ -23,7 +23,7 @@
 			{{ form.as_p }}
 			<input type="submit" value="Update" />
 		</form>
-		<a href = "accounts/password/change">Change Password</a>
+		<a href ="{% url 'auth_password_change' %}">Change Password</a>
 	{% else %}
 	<p><strong>You do not have permission to edit this profile</strong></p>
 	{% endif %}

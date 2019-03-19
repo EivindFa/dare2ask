@@ -11,32 +11,19 @@
   {% endif %}
 {% endblock %}
 
-{% block body_block %}
-  <h1>Create a Lecture</h1>
+{% block header %}
   {% if user.userprofile.lecturer %}
-    You are staff!
-    <div>
-      <form id="lecture_form" \
-      method="post" action="/dare2ask/lecture/">
-        {% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-          {{ hidden }}
-        {% endfor %}
-          {% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text}}
-            {{ field }}
-        {% endfor %}
-        <input type="submit" name="submit" value="Create Lecture" />
-      </form>
-    </div>
+  <h1>Create or join a Lecture</h1>
   {% else %}
-    You are not staff! You can't create a lecture :(
+  <h1>Join a lecture</h1>
   {% endif %}
 {% endblock %}
-
-{% block body_block_2 %}
-  <h1>Join a Lecture</h1>
+{% block headertext %}
+{% endblock %}
+{% block headerlowleft %}
+<h1>Join a Lecture</h1>
+{% endblock %}
+{% block textlowleft %}
   <div>
     {% if lectures %}
       <ul>
@@ -52,3 +39,28 @@
     {% endif %}
   </div>
 {% endblock %}
+{% block headerlowright %}
+  {% if user.userprofile.lecturer %}
+    You are staff!
+  {% endif %}
+{% endblock %}
+{% block textlowright %}
+  {% if user.userprofile.lecturer %}
+    <div>
+      <form id="lecture_form" \
+      method="post" action="/dare2ask/lecture/">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+          {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text}}
+            {{ field }}
+        {% endfor %}
+        <input type="submit" name="submit" value="Create Lecture" />
+      </form>
+    </div>
+  {% endif %}
+{% endblock %}
+
