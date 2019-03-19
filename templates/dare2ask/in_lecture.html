@@ -39,7 +39,7 @@
 
               <!--
               <br>Votes: {{ question.upvotes }}
-              <!-- Upvote form only visible to students
+               Upvote form only visible to students
               <form id="upvote" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
                 {% csrf_token %}
                 <button type="submit" value="{{forloop.counter}}" name="upvote_question">Upvote</button>
@@ -48,9 +48,9 @@
 
             <!-- AJAX button goes here -->
             <div>
-              <strong id="like_count"> {{ question.upvotes }}</strong>
-              <button id="likes" data-upvoteid="{{question.id}}"
-                class="btn btn-primary btn-sm" type="button">
+              <strong class="like_count">{{ question.upvotes }}</strong>
+              <button data-upvoteid="{{question.id}}"
+                class="btn btn-primary btn-sm likes" type="button">
                 Like
               </button>
             </div>
@@ -84,15 +84,5 @@
       A lecture with this name does not exist. </br>
       <a href = "{% url 'dare2ask:lecture' %}">Try another </a>
     </div>
-  {% endif %}
-{% endblock %}
-
-{% block body_block_2 %}
-  {% if lecture.title %}
-    {% if user.is_staff %}
-      <h1>Delete the lecture!</h1>
-      <button onclick="window.location.href =
-        '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
-    {% endif %}
   {% endif %}
 {% endblock %}
