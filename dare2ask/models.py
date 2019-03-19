@@ -26,6 +26,7 @@ class Question(models.Model):
     upvotes = models.IntegerField(default = 0)
     answered = models.BooleanField(default = False)
     max_length=128
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
 
     def __str__(self):
         return self.text
