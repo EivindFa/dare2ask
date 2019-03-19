@@ -78,6 +78,8 @@
       <h1>Delete the lecture!</h1>
       <button onclick="window.location.href =
         '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
+    {% else %}
+      Not staff!
     {% endif %}
   {% endif %}
 {% endblock %}
