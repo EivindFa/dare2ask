@@ -7,8 +7,10 @@
 	Login
 {% endblock %}
 
-{% block body_block %}
+{% block header %}
 <h1>Login to Dare2Ask</h1>
+{% endblock %}
+{% block headertext %}
 <form id="login_form" method="post" action="{% url 'dare2ask:login' %}">
 	{% csrf_token %}
 	{{ Username.errors }}

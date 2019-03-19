@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
 {% extends "dare2ask/base.html" %}
-{% block body_block %}
+{% block header %}
 	<h2 class="form-signin-heading">
 		Sign Up Here
 	</h2>
+	{% endblock %}
+	{% block headertext %}
 	<form role="form"  method="post" action=".">
     	{% csrf_token %}
     	{% for field in form.visible_fields %}
@@ -47,5 +49,11 @@
     	</button>
 	</form>
 {% endblock %}
-{% block body_block_2 %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}

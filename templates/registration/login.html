@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 
 {% extends "dare2ask/base.html" %}
-{% block body_block %}
+{% block header %}
 	<link href="http"//v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 	<div class="jumbotron">
 		<h1 class="display-3">Login</h1>
 	</div>
+	{% endblock %}
+	{% block headertext %}
 	<form class="form-signin" role="form" method="post" action=".">
 		{% csrf_token %}
 		{% for field in form.visible_fields %}
@@ -27,5 +29,11 @@
 		</button>
 	</form>
 {% endblock %}
-{% block body_block_2 %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}
