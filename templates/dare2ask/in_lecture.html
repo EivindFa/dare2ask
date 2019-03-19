@@ -86,3 +86,13 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{% block body_block_2 %}
+  {% if lecture.title %}
+    {% if user.is_staff %}
+      <h1>Delete the lecture!</h1>
+      <button onclick="window.location.href =
+        '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
+    {% endif %}
+  {% endif %}
+{% endblock %}
