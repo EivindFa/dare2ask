@@ -7,13 +7,21 @@
 	Registration - Step 2
 {% endblock %}
 
-{% block body_block %}
+{% block header %}
 	<h1>Registration - Step 2</h1>
+{% endblock %}
+{% block headertext %}
 	<form method="post" action="." enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Submit or skip" />
 	</form>
 {% endblock %}
-{% block body_block_2 %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}

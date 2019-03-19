@@ -7,17 +7,29 @@
 	Dare2Ask!
 {% endblock %}
 
-{% block body_block %}
+{% block header %}
 <div>
 	<ul>
 		{% if user.is_authenticated %}
 			<h1>Hi, {{user}}, welcome to Dare2Ask! </br> </h1>
-			<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
-			<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
 		{% endif %}
-		<a href="{% url 'index' %}">Index</a><br />
+		<a>Welcome to Dare2Ask!</a><br />
 	</ul>
 </div>
 {% endblock %}
-{% block body_block_2 %}
+{% block headertext %}
+{% if user.is_authenticated %}
+	<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
+	<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+{% else %}
+	<li><a href="{% url 'registration_register' %}"> Register with us to get started!</a></li>
+{% endif %}
+{% endblock %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}

@@ -7,8 +7,10 @@
 	{{ selecteduser.username }} Profile
 {% endblock %}
 
-{% block body_block %}
+{% block header %}
 <h1>{{ selecteduser.username }} Profile</h1>
+{% endblock %}
+{% block headertext %}
 <img src="{{ MEDIA_URL }}{{ userprofile.picture }}"
 	 width="300"
 	 height="300"
@@ -29,5 +31,11 @@
 <div id="edit_profile"></div>
 {% endblock %}
 
-{% block body_block_2 %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}
