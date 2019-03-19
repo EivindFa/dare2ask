@@ -41,8 +41,8 @@
   <div class="container d-flex flex-column flex-md-row justify-content-between">
     <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/Logo.png' %}" width="82"></a>
     {% if user.is_authenticated %}
-    <a class="py-2 d-none d-md-inline-block" href="{% url 'auth_logout' %}?next=/dare2ask/" style="margin-top: 25px">Logout</a>
     <a class="py-2 d-none d-md-inline-block" href="{% url 'dare2ask:profile' user.username %}" style="margin-top: 25px">Logged in as: {{ user.username }}           <img src="{{ MEDIA_URL }}{{user.userprofile.picture }}" width="30" height="30"> </a>
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'auth_logout' %}?next=/dare2ask/" style="margin-top: 25px">Logout</a>
     {% else %}
     <a class="py-2 d-none d-md-inline-block" href="{% url 'registration_register' %}" style="margin-top: 25px">Register Here</a>
     <a class="py-2 d-none d-md-inline-block" href="{% url 'auth_login' %}" style="margin-top: 25px">Login</a>

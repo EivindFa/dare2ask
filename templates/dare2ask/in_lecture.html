@@ -11,9 +11,15 @@
   {% endif %}
 {% endblock %}
 
-{% block body_block %}
+{% block header %}
   {% if lecture.title %}
     <h1>{{ lecture.title }}</h1>
+  {% else %}
+    <h1>Lecture not found!</h1>
+  {% endif %}
+{% endblock %}
+{% block headertext %}
+  {% if lecture.title %}
     <div>
       <form id="question_form" method="post"
         action="{% url 'dare2ask:in_lecture' lecture.slug %}">
@@ -61,15 +67,17 @@
               {% else %} Unanswered
               {% endif %}
               <!-- Answered form only visible to instructors -->
-              <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
-                {% csrf_token %}
-                <button type="submit" name="answered_question" value="{{forloop.counter}}">
-                  Mark
-                  {% if question.answered %} Unanswered
-                  {% else %} Answered
-                  {% endif %}
-                </button>
-              </form>
+              {% if user.userprofile.lecturer %}
+                <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+                  {% csrf_token %}
+                  <button type="submit" name="answered_question" value="{{forloop.counter}}">
+                    Mark
+                    {% if question.answered %} Unanswered
+                    {% else %} Answered
+                    {% endif %}
+                  </button>
+                </form>
+              {% endif %}
             </li>
           {% endfor %}
         </ul>
@@ -79,7 +87,6 @@
       {% endif %}
     </div>
   {% else %}
-    <h1>Lecture not found!</h1>
     <div>
       A lecture with this name does not exist. </br>
       <a href = "{% url 'dare2ask:lecture' %}">Try another </a>
@@ -87,10 +94,21 @@
   {% endif %}
 {% endblock %}
 
-{% block body_block_2 %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+
+{% block headerlowright %}
   {% if lecture.title %}
-    {% if user.is_staff %}
+    {% if user.userprofile.lecturer %}
       <h1>Delete the lecture!</h1>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+{% block textlowright %}
+  {% if lecture.title %}
+    {% if user.userprofile.lecturer %}
       <button onclick="window.location.href =
         '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
     {% endif %}
