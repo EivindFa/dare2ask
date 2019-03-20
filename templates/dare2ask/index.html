@@ -51,7 +51,7 @@
 	<a href = "{% url 'dare2ask:lecture' %}" class="button1">Create or Join a Lecture</a>
 	<!--<a href="{% url 'auth_logout' %}?next=/dare2ask/" class=button1>Logout</a> -->
 {% else %}
-	<li><a href="{% url 'registration_register' %}"> Register with us to get started!</a></li>
+	<a href="{% url 'registration_register' %}" class="button1"> Register with us to get started!</a>
 </div>
 {% endif %}
 {% endblock %}

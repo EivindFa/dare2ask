@@ -1,5 +1,28 @@
 <!DOCTYPE html>
+<style>
+	.button1{
+		font-size: 20px;
+		 color: #0099CC;
+		 background: transparent;
+		 border: 2px solid #0099CC;
+		 border-radius: 6px;
+		 transition-duration: 0.4s;
+		 cursor: pointer;
 
+	 
+	}
+	.button1:hover {
+		color: #DA70D6;
+		background-color: #008CBA;
+		color: white;
+	}
+	.button1:active {
+		color: #DA70D6;
+		position:relative;
+		top:1px;
+	}
+
+</style>
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
@@ -21,9 +44,9 @@
 		<form method="post" action="." enctype="multipart/form-data">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<input type="submit" value="Update" />
+			<input type="submit" value="Update" class="button1" />
 		</form>
-		<a href ="{% url 'auth_password_change' %}">Change Password</a>
+		<a class="button1" href ="{% url 'auth_password_change' %}">Change Password</a>
 	{% else %}
 	<p><strong>You do not have permission to edit this profile</strong></p>
 	{% endif %}

@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 
+<style>
+	.button1{
+		font-size: 20px;
+		 color: #0099CC;
+		 background: transparent;
+		 border: 2px solid #0099CC;
+		 border-radius: 6px;
+		 transition-duration: 0.4s;
+		 cursor: pointer;
+
+	 
+	}
+	.button1:hover {
+		color: #DA70D6;
+		background-color: #008CBA;
+		color: white;
+	}
+	.button1:active {
+		color: #DA70D6;
+		position:relative;
+		top:1px;
+	}
+
+</style>
+
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
@@ -18,11 +43,11 @@
 		<!-- {{ form.as_p }} -->
 		<div class="reg2">
 		{% for field in form.visible_fields %}
-			<a class="fieldname">{{field.name}} :</a> {{ field }} 
+			<a class="fieldname">{{field.name}} :</a> {{ field }}
 		{% endfor %}
 		</div>
 		<br/>
-		<input type="submit" value="Submit or skip" />
+		<input type="submit" value="Submit or skip" class="button1" />
 	</form>
 {% endblock %}
 {% block headerlowleft %}
