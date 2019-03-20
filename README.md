@@ -16,7 +16,9 @@ Instructions for setting up the project on my own computer. See deployment for n
 
 ## Installing
 
-Not done..
+```
+git clone https://github.com/Yvoonnnnee/dare2ask.git
+```
 
 ## Running the app locally
 To run the server, use:
