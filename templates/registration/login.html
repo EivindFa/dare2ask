@@ -3,19 +3,19 @@
 {% extends "dare2ask/base.html" %}
 {% block header %}
 	<link href="http"//v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
-	<div class="jumbotron">
+	<div class="jumbotron"">
 		<h1 class="display-3">Login</h1>
 	</div>
 	{% endblock %}
 	{% block headertext %}
 	<form class="form-signin" role="form" method="post" action=".">
 		{% csrf_token %}
-		{% for field in form.visible_fields %}
-                    {{ field.errors }}
-		{% endfor %}
 		<h2 class="form-signin-heading">
 			Please sign in
 		</h2>
+		{% if form.errors %}
+			<div class="alert">Invalid credentials. Note that both fields may be case-sensitive.</div>
+		{% endif %}
 		<label for="inputUsername" class="sr-only">
 			Username
 		</label>
