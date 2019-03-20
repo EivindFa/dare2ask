@@ -32,3 +32,23 @@
 /*
     Styling index.html
 */
+
+/*
+    Styling registration_form.html
+*/
+
+.helptext{
+  color: #f57921;
+}
+
+.alert{
+  color: red;
+}
+
+.reg2{
+  margin:auto;
+}
+
+.fieldname{
+  font-size: 2em;
+}

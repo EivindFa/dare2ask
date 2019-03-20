@@ -11,7 +11,7 @@
 <div>
 	<ul>
 		{% if user.is_authenticated %}
-			<h1>Hi, {{user}}, welcome to Dare2Ask! </br> </h1>
+			<h1>Hi, {{user}}! </br> </h1>
 		{% endif %}
 		<a>Welcome to Dare2Ask!</a><br />
 	</ul>
@@ -20,7 +20,7 @@
 {% block headertext %}
 {% if user.is_authenticated %}
 	<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
-	<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+	<li><a href="{% url 'auth_logout' %}?next=/dare2ask/">Logout</a></li>
 {% else %}
 	<li><a href="{% url 'registration_register' %}"> Register with us to get started!</a></li>
 {% endif %}

@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="{% static 'images/Logo.png' %}">
+  <link rel="icon" href="{% static 'images/favicon.ico' %}">
 
   <!-- Styling css links here: -->
 
@@ -42,6 +42,13 @@
     <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/Logo.png' %}" width="82"></a>
     {% if user.is_authenticated %}
     <a class="py-2 d-none d-md-inline-block" href="{% url 'dare2ask:profile' user.username %}" style="margin-top: 25px">Logged in as: {{ user.username }}           <img src="{{ MEDIA_URL }}{{user.userprofile.picture }}" width="30" height="30"> </a>
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'dare2ask:lecture' %}" style="margin-top: 25px">
+      {% if user.userprofile.lecturer %}
+        Create or join a lecture
+      {% else %}
+        Join a lecture
+      {% endif %}
+    </a>
     <a class="py-2 d-none d-md-inline-block" href="{% url 'auth_logout' %}?next=/dare2ask/" style="margin-top: 25px">Logout</a>
     {% else %}
     <a class="py-2 d-none d-md-inline-block" href="{% url 'registration_register' %}" style="margin-top: 25px">Register Here</a>
@@ -53,7 +60,7 @@
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
-    <h1 class="display-4 font-weight-normal">{% block header %}DEFAULT HEADER{%endblock%}</h1>
+    <h1 class="display-4 font-weight-normal" style="margin-top: 10px">{% block header %}DEFAULT HEADER{%endblock%}</h1>
     <p class="lead font-weight-normal">{% block headertext %} DEFAULT HEADERTEXT{%endblock%}</p>
   </div>
 <!--   <div class="product-device shadow-sm d-none d-md-block"></div>

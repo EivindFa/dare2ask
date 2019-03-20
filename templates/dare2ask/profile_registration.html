@@ -6,14 +6,22 @@
 {% block title_block %}
 	Registration - Step 2
 {% endblock %}
-
+<link href="http"//v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 {% block header %}
-	<h1>Registration - Step 2</h1>
+<div class="jumbotron">
+		<h1 class="display-3">Register - Step 2</h1>
+	</div>
 {% endblock %}
 {% block headertext %}
 	<form method="post" action="." enctype="multipart/form-data">
 		{% csrf_token %}
-		{{ form.as_p }}
+		<!-- {{ form.as_p }} -->
+		<div class="reg2">
+		{% for field in form.visible_fields %}
+			<a class="fieldname">{{field.name}} :</a> {{ field }} 
+		{% endfor %}
+		</div>
+		<br/>
 		<input type="submit" value="Submit or skip" />
 	</form>
 {% endblock %}
