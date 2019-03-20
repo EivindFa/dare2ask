@@ -1,7 +1,35 @@
 <!DOCTYPE html>
 
+
+<style>
+	.button1{
+		font-size: 20px;
+		 color: #0099CC;
+		 background: transparent;
+		 border: 2px solid #0099CC;
+		 border-radius: 6px;
+		 transition-duration: 0.4s;
+		 cursor: pointer;
+
+	 
+	}
+	.button1:hover {
+		color: #DA70D6;
+		background-color: #008CBA;
+		color: white;
+	}
+	.button1:active {
+		color: #DA70D6;
+		position:relative;
+		top:1px;
+	}
+
+</style>
+
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
+
+
 
 {% block title_block %}
 	Dare2Ask!
@@ -13,16 +41,18 @@
 		{% if user.is_authenticated %}
 			<h1>Hi, {{user}}! </br> </h1>
 		{% endif %}
-		<a>Welcome to Dare2Ask!</a><br />
+		<p>Welcome to Dare2Ask!</p><br />
 	</ul>
 </div>
 {% endblock %}
 {% block headertext %}
 {% if user.is_authenticated %}
-	<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
-	<li><a href="{% url 'auth_logout' %}?next=/dare2ask/">Logout</a></li>
+	<div class="buttonsIndex">
+	<a href = "{% url 'dare2ask:lecture' %}" class="button1">Create or Join a Lecture</a>
+	<!--<a href="{% url 'auth_logout' %}?next=/dare2ask/" class=button1>Logout</a> -->
 {% else %}
 	<li><a href="{% url 'registration_register' %}"> Register with us to get started!</a></li>
+</div>
 {% endif %}
 {% endblock %}
 {% block headerlowleft %}
