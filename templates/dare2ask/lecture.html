@@ -25,6 +25,7 @@
 {% block headerlowleft %}
 <h1>Join a Lecture</h1>
 {% endblock %}
+
 {% block textlowleft %}
   <div>
     {% if lectures %}
@@ -41,6 +42,8 @@
     {% endif %}
   </div>
 {% endblock %}
+
+<!-- Create a lecture -->
 {% block headerlowright %}
   {% if user.userprofile.lecturer %}
     <h1>Create a lecture</h1>
@@ -64,20 +67,9 @@
       </form>
     </div>
   {% endif %}
+
+  <h1> Search for a Lecture </h1>
   <div>
-    <!-- <h1>Search for a lecture</h1>
-    <form id="search_form" \
-    method="get" action="/dare2ask/lecture/">
-      {% csrf_token %}
-      {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-      {% endfor %}
-        {% for field in form.visible_fields %}
-          {{ field.help_text}}
-          {{ field }}
-      {% endfor %}
-      <input type="submit" name="search" value="Search" />
-    </form> -->
     <form class = "form-inline my-2 my-lg-1">
       <input
         class = "form-control mr-sm-2"
