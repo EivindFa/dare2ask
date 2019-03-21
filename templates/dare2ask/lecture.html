@@ -18,8 +18,10 @@
   <h1>Join a lecture</h1>
   {% endif %}
 {% endblock %}
+
 {% block headertext %}
 {% endblock %}
+
 {% block headerlowleft %}
 <h1>Join a Lecture</h1>
 {% endblock %}
@@ -63,7 +65,7 @@
     </div>
   {% endif %}
   <div>
-    <h1>Search for a lecture</h1>
+    <!-- <h1>Search for a lecture</h1>
     <form id="search_form" \
     method="get" action="/dare2ask/lecture/">
       {% csrf_token %}
@@ -71,11 +73,20 @@
         {{ hidden }}
       {% endfor %}
         {% for field in form.visible_fields %}
-          {{ field.errors }}
           {{ field.help_text}}
           {{ field }}
       {% endfor %}
       <input type="submit" name="search" value="Search" />
-    </form>
+    </form> -->
+    <form class = "form-inline my-2 my-lg-1">
+      <input
+        class = "form-control mr-sm-2"
+        type = "search"
+        placeholder = "Lecture Name"
+        area-label = "Search2"
+        name = "search"
+      >
+      <input type="submit" />
+      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search4</button> -->
   </div>
 {% endblock %}

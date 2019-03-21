@@ -65,18 +65,26 @@ def lecture(request):
 	            print(formLec.errors)
 
     elif request.method == 'GET':
-        formLec = SearchForm(request.GET)
-
-        # Have we been provided with a valid form?
-        if formLec.is_valid():
-            print(formLec.cleaned_data)
-            return redirect('/dare2ask/search/' +
-				(formLec.cleaned_data)['name'])
-
-        else:
-	        # The supplised form contained errors,
-	        # Print errors to terminal.
-            print(formLec.errors)
+	    if 'search' in request.GET:
+	        lecs = Lecture.objects.order_by('title')
+	        search_slug = request.GET['search']
+	        print(lecs)
+	        print(search_slug)
+	        print(request.GET)
+	        lecs = lecs.filter(title__icontains=search_slug)
+	        print(lecs)
+	        context_dict = {'lectures': lecs, 'search': search_slug}
+	        # formLec = SearchForm(request.GET)
+			#
+	        # # Have we been provided with a valid form?
+	        # if formLec.is_valid():
+	        #     print(formLec.cleaned_data)
+	        return render(request, 'dare2ask/search.html', context_dict)
+			#
+	        # else:
+		    #     # The supplised form contained errors,
+		    #     # Print errors to terminal.
+	        #     print(formLec.errors)
 
     # Check that lectures exist
     try:
