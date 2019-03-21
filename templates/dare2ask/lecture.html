@@ -58,9 +58,24 @@
             {{ field.help_text}}
             {{ field }}
         {% endfor %}
-        <input type="submit" name="submit" value="Create Lecture" />
+        <input type="submit" name="lecture" value="Create Lecture" />
       </form>
     </div>
   {% endif %}
+  <div>
+    <h1>Search for a lecture</h1>
+    <form id="search_form" \
+    method="get" action="/dare2ask/lecture/">
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+      {% endfor %}
+        {% for field in form.visible_fields %}
+          {{ field.errors }}
+          {{ field.help_text}}
+          {{ field }}
+      {% endfor %}
+      <input type="submit" name="search" value="Search" />
+    </form>
+  </div>
 {% endblock %}
-

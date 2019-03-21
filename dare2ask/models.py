@@ -18,6 +18,13 @@ class Lecture(models.Model):
     def __str__(self):
         return self.title
 
+class Search(models.Model):
+    name = models.CharField(max_length=128)
+    slug = models.SlugField(unique = False) # (blank = True)
+
+    def __str__(self):
+        return self.name
+
 # For the questions that will be polled from students within a lecture.
 class Question(models.Model):
     # Holds parent Lecture, one-to-many relationship
