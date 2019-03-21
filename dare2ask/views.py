@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from dare2ask.models import Lecture, UserProfile, Question
-from dare2ask.forms import LectureForm, QuestionForm
+from dare2ask.forms import LectureForm, SearchForm, QuestionForm
 from dare2ask.forms import UserForm, UserProfileForm
 from dare2ask.decorators import is_staff
 
@@ -39,29 +39,44 @@ def about(request):
 
 @login_required
 def lecture(request):
-    form = LectureForm()
+    formLec = LectureForm()
     context_dict = {}
 
     # A HTTP Post?
     if request.method == 'POST':
-        form = LectureForm(request.POST)
+        if 'lecture' in request.POST:
+        	formLec = LectureForm(request.POST)
+
+	        # Have we been provided with a valid form?
+	        if formLec.is_valid():
+	            # Save the new category to the database.
+	            lec = formLec.save(commit=True)
+	            # Now that the lecture is saved
+	            # We could give a confirmation message
+	            # Bit since he most recent category added is on the index page
+	            # Then we can direct the user back to the index page.
+	            print(formLec.cleaned_data)
+	            return redirect('/dare2ask/lecture/' +
+	                (formLec.cleaned_data)['title'] )
+
+	        else:
+	            # The supplised form contained errors,
+	            # Print errors to terminal.
+	            print(formLec.errors)
+
+    elif request.method == 'GET':
+        formLec = SearchForm(request.GET)
 
         # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            lec = form.save(commit=True)
-            # Now that the lecture is saved
-            # We could give a confirmation message
-            # Bit since he most recent category added is on the index page
-            # Then we can direct the user back to the index page.
-            print(form.cleaned_data)
-            return redirect('/dare2ask/lecture/' +
-                (form.cleaned_data)['title'] )
+        if formLec.is_valid():
+            print(formLec.cleaned_data)
+            return redirect('/dare2ask/search/' +
+				(formLec.cleaned_data)['name'])
 
         else:
-            # The supplised form contained errors,
-            # Print errors to terminal.
-            print(form.errors)
+	        # The supplised form contained errors,
+	        # Print errors to terminal.
+            print(formLec.errors)
 
     # Check that lectures exist
     try:
@@ -70,11 +85,18 @@ def lecture(request):
     except Lecture.DoesNotExist:
         context_dict['lectures'] = None
 
-    context_dict['form'] = form
+    context_dict['form'] = formLec
 
     # Will handle the bad form, new form, or no form supplied cases
     # Will render the form with error messages
     return render(request, 'dare2ask/lecture.html', context_dict)
+
+def search(request, search_slug):
+	print(search_slug)
+	for lec in Lecture.objects.order_by('title'):
+		# if search_slug in
+		print(lec)
+	return HttpResponse("Hello")
 
 def in_lecture(request, lecture_name_slug):
 	form = QuestionForm()

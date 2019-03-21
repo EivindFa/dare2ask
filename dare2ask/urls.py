@@ -14,6 +14,8 @@ urlpatterns = [
 		views.lecture, name='lecture'),
 	url(r'^lecture/(?P<lecture_name_slug>[\w\-]+)/$',
 		views.in_lecture, name='in_lecture'),
+	url(r'^search/(?P<search_slug>[\w\-]+)$',
+		views.search, name = 'search'),
 	url(r'^delete/(?P<lecture_name_slug>[\w\-]+)/confirm$',
 		views.delete_conf, name = 'delete_conf'),
 	url(r'^delete/(?P<lecture_name_slug>[\w\-]+)/$',

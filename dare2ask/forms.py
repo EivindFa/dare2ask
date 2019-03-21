@@ -19,7 +19,7 @@ class SearchForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
                 help_text="Please enter the name of the \
                     lecture you are looking for.",
-                required=False)
+                required=True)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     # An inline metaclass to provide addiional info on the form.
