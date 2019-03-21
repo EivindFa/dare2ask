@@ -5,8 +5,12 @@ from dare2ask.models import UserProfile
 
 class LectureForm(forms.ModelForm):
     title = forms.CharField(max_length=Lecture.max_length,
-                help_text="Please enter the lecture room title.",
-                required=True)
+                required=True,
+                widget=forms.TextInput(attrs={
+                            'class':'form-control',
+                            'placeholder':"Lecture title...",
+                            'name':'title'
+                            } ) )
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     # An inline metaclass to provide addiional info on the form.

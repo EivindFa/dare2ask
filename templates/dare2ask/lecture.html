@@ -1,5 +1,33 @@
 <!DOCTYPE html>
 
+<style>
+	.button1{
+		font-size: 20px;
+		 color: #0099CC;
+		 background: transparent;
+		 border: 2px solid #0099CC;
+		 border-radius: 6px;
+		 transition-duration: 0.4s;
+		 cursor: pointer;
+		 padding-left: 5px;
+		 padding-right: 5px;
+		 padding-bottom: 3px;
+	   margin-top: 3px !important;
+	}
+	.button1:hover {
+		color: #DA70D6;
+		background-color: #008CBA;
+		color: white;
+	}
+	.button1:active {
+		color: #DA70D6;
+		position:relative;
+    down: 3px;
+		top:1px;
+	}
+
+</style>
+
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
@@ -53,32 +81,39 @@
   {% if user.userprofile.lecturer %}
     <div>
       <form id="lecture_form" \
-      method="post" action="/dare2ask/lecture/">
+      method="post" action="/dare2ask/lecture/"
+      class = "form-horizontal my-2 my-lg-1">
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
           {{ hidden }}
         {% endfor %}
           {% for field in form.visible_fields %}
             {{ field.errors }}
-            {{ field.help_text}}
             {{ field }}
         {% endfor %}
-        <input type="submit" name="lecture" value="Create Lecture" />
+
+        <br>
+
+        <!-- <input type="submit" name="lecture" value="Create Lecture" /> -->
+        <button class="button1" name="lecture"
+          type="submit">Create</button>
       </form>
     </div>
   {% endif %}
-
+  <hr style="height:10px; visibility:hidden;" />
   <h1> Search for a Lecture </h1>
   <div>
-    <form class = "form-inline my-2 my-lg-1">
+    <form class = "form-horizontal my-2 my-lg-1" >
       <input
         class = "form-control mr-sm-2"
         type = "search"
-        placeholder = "Lecture Name"
-        area-label = "Search2"
+        placeholder = "Lecture names including..."
         name = "search"
-      >
-      <input type="submit" />
+        required = True
+      />
+    <br>
+      <button class="button1"
+        type="submit">Search</button>
       <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search4</button> -->
   </div>
 {% endblock %}
