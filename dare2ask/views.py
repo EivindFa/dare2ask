@@ -25,7 +25,6 @@ def index(request):
 	# Return response back to the user, updating any cookies that needed change
 	return response
 
-#@is_staff
 def about(request):
 #	if request.session.test_cookie_worked():
 #		print("TEST COOKIE WORKED!")
@@ -99,6 +98,7 @@ def lecture(request):
     # Will render the form with error messages
     return render(request, 'dare2ask/lecture.html', context_dict)
 
+@login_required
 def search(request, search_slug):
 	print(search_slug)
 	for lec in Lecture.objects.order_by('title'):
@@ -106,6 +106,7 @@ def search(request, search_slug):
 		print(lec)
 	return HttpResponse("Hello")
 
+@login_required
 def in_lecture(request, lecture_name_slug):
 	form = QuestionForm()
 	context_dict = {'form': form}
@@ -161,7 +162,7 @@ def in_lecture(request, lecture_name_slug):
 
 	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 
-#@is_staff
+@login_required
 def delete_conf(request, lecture_name_slug):
     context_dict = {}
 
@@ -175,10 +176,12 @@ def delete_conf(request, lecture_name_slug):
         print('context_dict["lecture"]= None')
     return render(request, 'dare2ask/delete_conf.html', context_dict)
 
+@login_required
 def delete(request, lecture_name_slug):
     lec = get_object_or_404(Lecture, slug = lecture_name_slug).delete()
     return HttpResponseRedirect('/dare2ask')
 
+@login_required
 def delete_Q(request, lecture_name_slug, question_id):
 	lecture = Lecture.objects.get(slug = lecture_name_slug)
 
