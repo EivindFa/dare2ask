@@ -64,11 +64,9 @@ function removeQ(id) {
                 Like
               </button>
             <!-- END ajax button -->
-              <a style="position: absolute; right: 600px;">
               {% if question.answered %} Answered
               {% else %} Unanswered
               {% endif %}
-              </a>
               <!-- Answered form only visible to instructors -->
               {% if user.userprofile.lecturer %}
                 <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}" style="position: absolute; right: 575px;">
