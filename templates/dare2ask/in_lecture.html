@@ -63,17 +63,19 @@ function removeQ(id) {
             -->
 
             <!-- AJAX button goes here -->
-            {% if not user.userprofile.lecturer %}
               <strong class="like_count">{{ question.upvotes }}</strong>
+            {% if not user.userprofile.lecturer %}
               <button data-upvoteid="{{question.id}}"
                 class="button1 likes" type="button">
                 Like
               </button>
               {% endif %}
             <!-- END ajax button -->
+            <a style="color: grey;">
               {% if question.answered %} Answered
               {% else %} Unanswered
               {% endif %}
+            </a>
               <!-- Answered form only visible to instructors -->
               {% if user.userprofile.lecturer %}
                 <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
