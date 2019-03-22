@@ -46,7 +46,12 @@ function removeQ(id) {
       {% if questions %}
         <h3>Questions:</h3>
           {% for question in questions %}
-              <a style="font-style: italic; font-size: 20px;">"{{ question.text }}"<br/></a>
+              <a style="font-style: italic; font-size: 20px; background-color: yellow;">
+                {% if question.answered %}
+                  <a.ans style="background-color: #ccc;">
+                {% endif %}
+                "{{ question.text }}"
+               <br/></a>
 
               <!--
               <br>Votes: {{ question.upvotes }}
@@ -58,22 +63,22 @@ function removeQ(id) {
             -->
 
             <!-- AJAX button goes here -->
+            {% if not user.userprofile.lecturer %}
               <strong class="like_count">{{ question.upvotes }}</strong>
               <button data-upvoteid="{{question.id}}"
                 class="button1 likes" type="button">
                 Like
               </button>
+              {% endif %}
             <!-- END ajax button -->
-              <a style="position: absolute; right: 600px;">
               {% if question.answered %} Answered
               {% else %} Unanswered
               {% endif %}
-              </a>
               <!-- Answered form only visible to instructors -->
               {% if user.userprofile.lecturer %}
-                <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}" style="position: absolute; right: 575px;">
+                <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
                   {% csrf_token %}
-                  <button type="submit" name="answered_question" value="{{forloop.counter}}">
+                  <button class="button1" type="submit" name="answered_question" value="{{forloop.counter}}">
                     Mark
                     {% if question.answered %} Unanswered
                     {% else %} Answered
@@ -81,8 +86,8 @@ function removeQ(id) {
                   </button>
                 </form>
                 <!-- Delete question button -->
-                <button onclick="window.location.href =
-                  '/dare2ask/delete/{{lecture.slug}}/{{question.id}}';">X {{question.id }}</button>
+                <button class="button1" onclick="window.location.href =
+                  '/dare2ask/delete/{{lecture.slug}}/{{question.id}}';">Delete</button>
               {% endif %}
               <br/><br/><br/>
           {% endfor %}
@@ -116,7 +121,7 @@ function removeQ(id) {
 {% block textlowright %}
   {% if lecture.title %}
     {% if user.userprofile.lecturer %}
-      <button onclick="window.location.href =
+      <button class="button1" onclick="window.location.href =
         '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
     {% endif %}
   {% endif %}
