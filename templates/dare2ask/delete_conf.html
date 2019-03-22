@@ -22,9 +22,9 @@
   {% if lecture.title %}
     <div>
       Are you sure you want to delete the lecture, [{{ lecture.title }}]?
-      <button onclick="window.location.href =
+      <button class="button1" onclick="window.location.href =
         '/dare2ask/delete/{{lecture.slug}}';">Delete!</button>
-      <button onclick="window.location.href =
+      <button class="button1" onclick="window.location.href =
           '/dare2ask/lecture/{{lecture.slug}}';">No!</button>
     </div>
   {% else %}

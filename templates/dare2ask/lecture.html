@@ -41,20 +41,40 @@
 
 {% block header %}
   {% if user.userprofile.lecturer %}
-  <h1>Create or join a Lecture</h1>
+  Create or join a Lecture
   {% else %}
-  <h1>Join a lecture</h1>
+  Join a lecture
   {% endif %}
 {% endblock %}
 
 {% block headertext %}
 {% endblock %}
 
-{% block headerlowleft %}
-<h1>Join a Lecture</h1>
+{% block headerlowright %}
+<h1>Lectures</h1>
 {% endblock %}
 
-{% block textlowleft %}
+{% block textlowright %}
+{% if user.userprofile.lecturer %}
+<h3> Search for a Lecture </h3>
+  <div>
+    <form class = "form-horizontal my-2 my-lg-1" >
+      <input
+        class = "form-control mr-sm-2"
+        type = "search"
+        placeholder = "Lecture names including..."
+        name = "search"
+        required = True
+      />
+    <br>
+      <button class="button1"
+        type="submit">Search</button>
+      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search4</button> -->
+    </form>
+  </div>
+  <br/>
+{% endif %}
+<h3> Existing lectures: </h3>
   <div>
     {% if lectures %}
       <ul>
@@ -72,13 +92,14 @@
 {% endblock %}
 
 <!-- Create a lecture -->
-{% block headerlowright %}
+{% block headerlowleft %}
   {% if user.userprofile.lecturer %}
     <h1>Create a lecture</h1>
   {% endif %}
 {% endblock %}
-{% block textlowright %}
+{% block textlowleft %}
   {% if user.userprofile.lecturer %}
+    <h3> Fill out a name for your new lecture: </h3>
     <div>
       <form id="lecture_form" \
       method="post" action="/dare2ask/lecture/"
@@ -97,11 +118,13 @@
         <!-- <input type="submit" name="lecture" value="Create Lecture" /> -->
         <button class="button1" name="lecture"
           type="submit">Create</button>
+
+        <!-- <input class="button1" type="submit" name="submit" value="Create Lecture" /> -->
+
       </form>
     </div>
-  {% endif %}
-  <hr style="height:10px; visibility:hidden;" />
-  <h1> Search for a Lecture </h1>
+  {% else %}
+  <h3> Search for a Lecture </h3>
   <div>
     <form class = "form-horizontal my-2 my-lg-1" >
       <input
@@ -116,4 +139,6 @@
         type="submit">Search</button>
       <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search4</button> -->
   </div>
+  {% endif %}
+  <hr style="height:10px; visibility:hidden;" />
 {% endblock %}
