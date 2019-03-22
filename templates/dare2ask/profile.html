@@ -23,7 +23,8 @@
 			{{ form.as_p }}
 			<input type="submit" value="Update" class="button1" />
 		</form>
-		<a class="button1" href ="{% url 'auth_password_change' %}">Change Password</a>
+		<br/>
+		<button class="button1" button onclick="window.location.href ='{% url 'auth_password_change' %}'">Change Password</button>
 	{% else %}
 	<p><strong>You do not have permission to edit this profile</strong></p>
 	{% endif %}
