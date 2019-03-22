@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 
+<script>
+function removeQ(id) {
+  document.getElementById("demo").innerHTML = "Hello World";
+}
+</script>
+
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
@@ -77,6 +83,9 @@
                     {% endif %}
                   </button>
                 </form>
+                <!-- Delete question button -->
+                <button onclick="window.location.href =
+                  '/dare2ask/delete/{{lecture.slug}}/{{question.id}}';">X {{question.id }}</button>
               {% endif %}
             </li>
           {% endfor %}
@@ -99,6 +108,7 @@
 {% block textlowleft %}
 {% endblock %}
 
+<!-- Delete the lecture -->
 {% block headerlowright %}
   {% if lecture.title %}
     {% if user.userprofile.lecturer %}
@@ -106,6 +116,7 @@
     {% endif %}
   {% endif %}
 {% endblock %}
+
 {% block textlowright %}
   {% if lecture.title %}
     {% if user.userprofile.lecturer %}

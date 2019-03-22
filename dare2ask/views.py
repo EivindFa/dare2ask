@@ -132,6 +132,7 @@ def in_lecture(request, lecture_name_slug):
 		# Template will display "no category" message
 		context_dict['lecture'] = None
 
+	# To interact with questions
 	if request.method == 'POST':
 		print("REQUEST=",request.body,"\n",request.POST)
 		if "Create Question" in request.POST.get('create_question', 'None'):
@@ -179,6 +180,21 @@ def delete_conf(request, lecture_name_slug):
 def delete(request, lecture_name_slug):
     lec = get_object_or_404(Lecture, slug = lecture_name_slug).delete()
     return HttpResponseRedirect('/dare2ask')
+
+def delete_Q(request, lecture_name_slug, question_id):
+	lecture = Lecture.objects.get(slug = lecture_name_slug)
+
+	# Retrieve all of the associated questions.
+	# filter() will return a list of question objects or empty list
+	# qAll = Question.objects.all()
+	# print(qAll)
+	# questions = Question.objects.filter(lecture = lecture)
+
+	# print(questions)
+	Question.objects.filter(id = question_id).delete()
+	questions2 = Question.objects.filter(lecture = lecture)
+	# print(questions2)
+	return HttpResponseRedirect('/dare2ask/lecture/' + lecture_name_slug)
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
