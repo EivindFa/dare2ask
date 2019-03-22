@@ -33,15 +33,14 @@
 {% endblock %}
 <link href="http"//v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 {% block header %}
-<div class="jumbotron">
-		<h1 class="display-3">Register - Step 2</h1>
+<div class="reglog_banner">
+		<h1 class="reglog_text">Register - Step 2</h1>
 	</div>
 {% endblock %}
 {% block headertext %}
 	<form method="post" action="." enctype="multipart/form-data">
 		{% csrf_token %}
-		<!-- {{ form.as_p }} -->
-		<div class="reg2">
+		<div class="reglog_input">
 		{% for field in form.visible_fields %}
 			<a class="fieldname">{{field.name}} :</a> {{ field }}
 		{% endfor %}
