@@ -19,9 +19,9 @@ function removeQ(id) {
 
 {% block header %}
   {% if lecture.title %}
-    <h1>{{ lecture.title }}</h1>
+    {{ lecture.title }}
   {% else %}
-    <h1>Lecture not found!</h1>
+    Lecture not found!
   {% endif %}
 {% endblock %}
 {% block headertext %}

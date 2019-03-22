@@ -42,10 +42,12 @@
     	<h2 class="form-signin-heading">
 			Please fill out your details below
 		</h2>
+		{% if form.errors %}
+		<div class="alert"> <strong>The following errors have occurred:</strong><br/></div>
+		{% endif %}
     	{% for field in form.visible_fields %}
     		{% if field.errors %}
     		<div class="alert">
-    			<strong>The following errors have occurred:</strong><br/>
                 {{ field.name }} : {{ field.errors }}
             </div>
             {% endif %}

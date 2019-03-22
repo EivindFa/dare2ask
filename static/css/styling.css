@@ -44,7 +44,7 @@
 /*****
   Custom code
   Note: the colours from the logo are:
-  blue ; #05dcff
+  blue ; #05dcff (darker: #009cb5)
   red : ff0000
   yellow : fdff00
   green : 0cff00
@@ -56,9 +56,9 @@
 
 .button1{
     font-size: 20px;
-     color: #0099CC;
+     color: #009cb5;
      background: transparent;
-     border: 2px solid #0099CC;
+     border: 2px solid #009cb5;
      border-radius: 6px;
      transition-duration: 0.4s;
      cursor: pointer;
@@ -67,7 +67,7 @@
   }
   .button1:hover {
     color: #DA70D6;
-    background-color: #008CBA;
+    background-color: #009cb5;
     color: white;
   }
   .button1:active {
@@ -86,11 +86,11 @@
 }
 
 /*
-    Three columns
+    Four columns
 */
 .dev{
   float:right;
-  width:33.3%;
+  width:25%;
   font-family: Arial, Helvetica,sans-serif;
   font-weight: normal;
 
@@ -101,7 +101,6 @@
 
 .dev img{
   position: relative;
-  left:70px;
   height: 100px;
   width: 100px;
 
