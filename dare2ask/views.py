@@ -141,15 +141,11 @@ def in_lecture(request, lecture_name_slug):
 				q = form.save(commit=False)
 				q.lecture = context_dict['lecture']
 				q.save()
+				return HttpResponseRedirect('/dare2ask/lecture/' + lecture_name_slug)
 			else:
 				print(form.errors)
-				'''elif "upvote_question" in request.POST:
-			# Get the current question
-			print("UPVOTING")
-			i = int(request.POST['upvote_question'])-1
-			question = context_dict["questions"][0]
-			question.upvotes += 1
-			question.save()'''
+				return HttpResponseRedirect('/dare2ask/lecture/' + lecture_name_slug)
+
 		elif "answered_question" in request.POST:
 			i = int(request.POST['answered_question'])-1
 			question = context_dict["questions"][i]
@@ -158,8 +154,10 @@ def in_lecture(request, lecture_name_slug):
 			else:
 				question.answered = True
 			question.save()
+			return HttpResponseRedirect('/dare2ask/lecture/' + lecture_name_slug)
 		else:
 			print("UNRECOGNIZED")
+			return HttpResponseRedirect('/dare2ask/lecture/' + lecture_name_slug)
 
 	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
 
