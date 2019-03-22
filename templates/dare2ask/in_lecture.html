@@ -5,7 +5,7 @@
 
 {% block title_block %}
   {% if lecture.title %}
-    {{ lecture.title }}
+    Lecture: {{ lecture.title }}
   {% else %}
     Lecture not found
   {% endif %}
@@ -32,16 +32,15 @@
           {{ field.help_text}}
           {{ field }}
         {% endfor %}
-        <input type="submit" name="create_question" value="Create Question" />
+        <input class="button1" type="submit" name="create_question" value="Create Question" />
       </form>
     </div>
+    <br/>
     <div>
       {% if questions %}
         <h3>Questions:</h3>
-        <ul>
           {% for question in questions %}
-            <li>
-              {{ question.text }}
+              <a style="font-style: italic; font-size: 20px;">"{{ question.text }}"<br/></a>
 
               <!--
               <br>Votes: {{ question.upvotes }}
@@ -53,22 +52,20 @@
             -->
 
             <!-- AJAX button goes here -->
-            <div>
               <strong class="like_count">{{ question.upvotes }}</strong>
               <button data-upvoteid="{{question.id}}"
-                class="btn btn-primary btn-sm likes" type="button">
+                class="button1" type="button">
                 Like
               </button>
-            </div>
             <!-- END ajax button -->
-
-
+              <a style="position: absolute; right: 600px;">
               {% if question.answered %} Answered
               {% else %} Unanswered
               {% endif %}
+              </a>
               <!-- Answered form only visible to instructors -->
               {% if user.userprofile.lecturer %}
-                <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+                <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}" style="position: absolute; right: 575px;">
                   {% csrf_token %}
                   <button type="submit" name="answered_question" value="{{forloop.counter}}">
                     Mark
@@ -78,9 +75,8 @@
                   </button>
                 </form>
               {% endif %}
-            </li>
+              <br/><br/><br/>
           {% endfor %}
-        </ul>
 
       {% else %}
         <div>No questions have been asked</div>

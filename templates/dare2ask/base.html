@@ -17,9 +17,9 @@
 
   <!-- Styling css links here: -->
 
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bas_min_2.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/core.css' %}">
   <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}"> -->
-  <link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}"> -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/styling.css' %}">
 
   <!-- End of styling sheet links -->
@@ -35,7 +35,7 @@
   <!-- <link href= "http://v4-alpha.getbootstrap.com/examples/product/product.css" rel="stylesheet"> -->
 </head>
 
-<body style="background-image: url('../../static/images/background.png');">
+<body style="background-image: url('../../static/images/background.png'), url('../../../static/images/background.png')">
 
 <nav class="site-header sticky-top py-1">
   <div class="container d-flex flex-column flex-md-row justify-content-between">
@@ -60,13 +60,10 @@
 
 <div style="margin:auto; text-align: center;">
   <div style="margin-top: 25px">
-    <h1 class="display-4 font-weight-normal" style="margin-top: 10px">{% block header %}DEFAULT HEADER{%endblock%}</h1>
-    <p class="lead font-weight-normal">{% block headertext %} DEFAULT HEADERTEXT{%endblock%}</p>
+    <h1 class="display-4 font-weight-normal">{% block header %}DEFAULT HEADER{%endblock%}</h1>
+    <p>{% block headertext %} DEFAULT HEADERTEXT{%endblock%}</p>
   </div>
-<!--   <div class="product-device shadow-sm d-none d-md-block"></div>
- -->  
-<!--  <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
- --></div>
+</div>
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
   <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
