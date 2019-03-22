@@ -21,7 +21,7 @@
 {% block headertext %}
   {% if lecture.title %}
     <div>
-      Are you sure you want to delete the lecture, [{{ lecture.title }}]?
+      Are you sure you want to delete the lecture, [{{ lecture.title }}]? <br/>
       <button class="button1" onclick="window.location.href =
         '/dare2ask/delete/{{lecture.slug}}';">Delete!</button>
       <button class="button1" onclick="window.location.href =
