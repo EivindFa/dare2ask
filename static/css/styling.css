@@ -149,6 +149,15 @@
  -webkit-box-shadow ease-in-out 
  .15s}
 
+ .lecturer_buttons{
+  display: table;
+ }
+
+ .lecturer {
+  display: table-cell;
+  /*width: 40%;*/
+ }
+
 .reglog_text{
   font-size:4.5rem;
   font-weight:300;

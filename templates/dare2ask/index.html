@@ -20,7 +20,13 @@
 {% block headertext %}
 {% if user.is_authenticated %}
 	<div class="buttonsIndex">
-	<button onclick="window.location.href = '{% url 'dare2ask:lecture' %}'" class="button1">Create or Join a Lecture</button>
+	<button onclick="window.location.href = '{% url 'dare2ask:lecture' %}'" class="button1">
+	{% if user.userprofile.lecturer %}
+		Create or Join a Lecture
+	{% else %}
+		Join a Lecture
+	{% endif %}
+	</button>
 	<!--<a href="{% url 'auth_logout' %}?next=/dare2ask/" class=button1>Logout</a> -->
 {% else %}
 	<button onclick="window.location.href='{% url 'registration_register' %}'" class="button1"> Register with us to get started!</button>
