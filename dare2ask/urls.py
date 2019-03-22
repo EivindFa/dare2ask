@@ -14,4 +14,17 @@ urlpatterns = [
 		views.lecture, name='lecture'),
 	url(r'^lecture/(?P<lecture_name_slug>[\w\-]+)/$',
 		views.in_lecture, name='in_lecture'),
+	url(r'^search/(?P<search_slug>[\w\-]+)$',
+		views.search, name = 'search'),
+	url(r'^delete/(?P<lecture_name_slug>[\w\-]+)/(?P<question_id>\d+)$',
+		views.delete_Q, name = 'delete_Q'),
+	url(r'^delete/(?P<lecture_name_slug>[\w\-]+)/confirm$',
+		views.delete_conf, name = 'delete_conf'),
+	url(r'^delete/(?P<lecture_name_slug>[\w\-]+)/$',
+		views.delete, name = 'delete'),
+	url(r'^register_profile/$',
+		views.register_profile, name='register_profile'),
+	url(r'^profile/(?P<username>[\w\-]+)/$',
+		views.profile, name='profile'),
+	url(r'^like/$', views.like_question, name='like_question'), # temporary like id for AJAX - EF
 ]

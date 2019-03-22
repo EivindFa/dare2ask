@@ -3,7 +3,7 @@
 {% load dare2ask_template_tags %}
 
 <!-- To do list:
-  - Display who's logged in. "Logged in as XX" on top bar or something
+  - Make everything actually pretty using CSS
 -->
 
 <html lang="en">
@@ -13,77 +13,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="{% static 'images/Logo.png' %}">
+  <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+  <!-- Styling css links here: -->
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/core.css' %}">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}"> -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styling.css' %}">
+
+  <!-- End of styling sheet links -->
   <title>
-    Dare2Ask -
-    {% block title %}
-      THIS IS THE BASE TEMPLATE
+    {% block title_block %}
+      BASE TITLE
     {% endblock %}
   </title>
   <!-- Bootstrap core CSS -->
-  <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- Custom styles for this template -->
-  <link href= "http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+  <!-- <link href= "http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet"> -->
+  <!-- <link href= "http://v4-alpha.getbootstrap.com/examples/product/product.css" rel="stylesheet"> -->
 </head>
 
-<body>
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-  <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbar"
-          aria-controls="navbar"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="{% url 'index' %}">Dare2Ask</a>
+<body style="background-image: url('../../static/images/background.png'), url('../../../static/images/background.png')">
 
-  <div class="collapse navbar-collapse" id="navbar">
-    <ul class="navbar-nav mr-auto">
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'auth_logout' %}?next=/dare2ask/">
-          Logout
-        </a>
-      </li>
+<nav class="site-header sticky-top py-1">
+  <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/Logo.png' %}" width="82"></a>
+    {% if user.is_authenticated %}
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'dare2ask:profile' user.username %}" style="margin-top: 25px">Logged in as: {{ user.username }}           <img src="{{ MEDIA_URL }}{{user.userprofile.picture }}" width="30" height="30"> </a>
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'dare2ask:lecture' %}" style="margin-top: 25px">
+      {% if user.userprofile.lecturer %}
+        Create or join a lecture
       {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'registration_register' %}">
-          Register Here
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'auth_login' %}">
-          Login
-        </a>
-      </li>
+        Join a lecture
       {% endif %}
-    </ul>
+    </a>
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'auth_logout' %}?next=/dare2ask/" style="margin-top: 25px">Logout</a>
+    {% else %}
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'registration_register' %}" style="margin-top: 25px">Register Here</a>
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'auth_login' %}" style="margin-top: 25px">Login</a>
+    {% endif %}
+    <a class="py-2 d-none d-md-inline-block" href="{% url 'dare2ask:about' %}" style="margin-top: 25px">About</a>
   </div>
 </nav>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-          {% block sidebar_block %}
-            <a class="nav-link" href="{% url 'dare2ask:about' %}">
-              About
-            </a>
-          {% endblock %}
-    </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-          {% block body_block %}
-            This is the first body_block's default content.
-          {% endblock %}
-    </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-          {% block body_block_2 %}
-            This is the second body_block's default content.
-          {% endblock %}
-    </div>
+<div style="margin:auto; text-align: center;">
+  <div style="margin-top: 25px">
+    <h1 class="display-4 font-weight-normal">{% block header %}DEFAULT HEADER{%endblock%}</h1>
+    <p>{% block headertext %} DEFAULT HEADERTEXT{%endblock%}</p>
   </div>
 </div>
+
+<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+  <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+    <div class="my-3 py-3">
+      <h2 class="display-5">{%block headerlowleft %} LOW LEFT HEADER {% endblock %}</h2>
+      <p class="lead">{%block textlowleft %} LOW LEFT TEXT {% endblock %}</p>
+    </div>
+    <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+  </div>
+  <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+    <div class="my-3 p-3">
+      <h2 class="display-5">{%block headerlowright %} LOW RIGHT HEADER {% endblock %}</h2>
+      <p class="lead">{%block textlowright %} LOW RIGHT TEXT {% endblock %}</p>
+    </div>
+    <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+  </div>
+</div>
+
 <!-- Bootstrap core JavaScript ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
@@ -93,5 +91,9 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src= "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
     </script>
+    <!-- <script src="{% static "js/jquery.min.js" %}"></script> -->
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "js/dare2ask-ajax.js" %}"></script>
+
 </body>
 </html>

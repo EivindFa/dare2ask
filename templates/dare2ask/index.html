@@ -4,24 +4,34 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	<div>
-		<br /><br /><br /><br /><br /><br />
-	</div>
 	Dare2Ask!
 {% endblock %}
 
-{% block body_block %}
+{% block header %}
 <div>
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 	<ul>
 		{% if user.is_authenticated %}
-			<li><a href = "{% url 'dare2ask:lecture' %}">Create or Join a Lecture</a></li>
-			<li><a href = "accounts/password/change">Change Password</a></li>
-			<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+			<h1>Hi, {{user}}! </br> </h1>
 		{% endif %}
-		<a href="{% url 'index' %}">Index</a><br />
+		<p>Welcome to Dare2Ask!</p><br />
 	</ul>
 </div>
+{% endblock %}
+{% block headertext %}
+{% if user.is_authenticated %}
+	<div class="buttonsIndex">
+	<a href = "{% url 'dare2ask:lecture' %}" class="button1">Create or Join a Lecture</a>
+	<!--<a href="{% url 'auth_logout' %}?next=/dare2ask/" class=button1>Logout</a> -->
+{% else %}
+	<a href="{% url 'registration_register' %}" class="button1"> Register with us to get started!</a>
+</div>
+{% endif %}
+{% endblock %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}

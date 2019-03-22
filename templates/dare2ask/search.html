@@ -1,0 +1,42 @@
+{% extends 'dare2ask/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+  Search
+{% endblock %}
+
+{% block header %}
+  {% if lectures %}
+    Lectures Found:
+  {% else %}
+    No Lectures Found :(
+  {% endif %}
+{% endblock %}
+
+{% block headertext %}
+  {% if not lectures %}
+    No lecture could be found containing: [{{ search }}]
+  {% else %}
+    <ul>
+    {% for lec in lectures %}
+    <li>
+      <a href="/dare2ask/lecture/{{ lec.slug }}">
+      {{ lec.title }} </a>
+    </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <a href="{% url 'dare2ask:lecture' %}">Back to lectures</a><br />
+{% endblock %}
+
+{% block headerlowleft %}
+{% endblock %}
+
+{% block textlowleft %}
+{% endblock %}
+
+{% block headerlowright %}
+{% endblock %}
+
+{% block textlowright %}
+{% endblock %}

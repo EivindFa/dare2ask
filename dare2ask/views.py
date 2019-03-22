@@ -1,26 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User
 
-from dare2ask.models import Lecture
-from dare2ask.forms import LectureForm
+from dare2ask.models import Lecture, UserProfile, Question
+from dare2ask.forms import LectureForm, SearchForm, QuestionForm
 from dare2ask.forms import UserForm, UserProfileForm
+from dare2ask.decorators import is_staff
 
 from datetime import datetime
-
-#welcome/home
-#about
-#register – writes to database
-#login
-#join/create lecture
-#in lecture – writes to database
-#my profile
-#edit my profile – writes to database
-#logged out
-
 
 def index(request):
 	request.session.set_test_cookie()
@@ -28,13 +19,13 @@ def index(request):
 	visitor_cookie_handler(request)
 
 	context_dict = {}
-
 	# Obtain our response object early so we can add cookie info
 	response = render(request, 'dare2ask/index.html', context=context_dict)
 
 	# Return response back to the user, updating any cookies that needed change
 	return response
 
+#@is_staff
 def about(request):
 #	if request.session.test_cookie_worked():
 #		print("TEST COOKIE WORKED!")
@@ -48,74 +39,162 @@ def about(request):
 
 @login_required
 def lecture(request):
+    formLec = LectureForm()
     context_dict = {}
-
-    form = LectureForm()
 
     # A HTTP Post?
     if request.method == 'POST':
-        form = LectureForm(request.POST)
-        #print(form.title)
-        #print('FLAG 1 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            #print('FLAG 2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            # Save the new category to the database.
-            cat = form.save(commit=True)
-            # Now that the category is saved
-            # We could give a confirmation message
-            # Bit since he most recent category added is on the index page
+        if 'lecture' in request.POST:
+        	formLec = LectureForm(request.POST)
 
-			# Then we can direct the user back to the index page.
-            return index(request)
+	        # Have we been provided with a valid form?
+	        if formLec.is_valid():
+	            # Save the new category to the database.
+	            lec = formLec.save(commit=True)
+	            # Now that the lecture is saved
+	            # We could give a confirmation message
+	            # Bit since he most recent category added is on the index page
+	            # Then we can direct the user back to the index page.
+	            print(formLec.cleaned_data)
+	            return redirect('/dare2ask/lecture/' +
+	                (formLec.cleaned_data)['title'] )
 
-        else:
-            # The supplised form contained errors,
-            # Print errors to terminal.
-            print(form.errors)
+	        else:
+	            # The supplised form contained errors,
+	            # Print errors to terminal.
+	            print(formLec.errors)
 
-    context_dict['form'] = form
+    elif request.method == 'GET':
+	    if 'search' in request.GET:
+	        lecs = Lecture.objects.order_by('title')
+	        search_slug = request.GET['search']
+	        print(lecs)
+	        print(search_slug)
+	        print(request.GET)
+	        lecs = lecs.filter(title__icontains=search_slug)
+	        print(lecs)
+	        context_dict = {'lectures': lecs, 'search': search_slug}
+	        # formLec = SearchForm(request.GET)
+			#
+	        # # Have we been provided with a valid form?
+	        # if formLec.is_valid():
+	        #     print(formLec.cleaned_data)
+	        return render(request, 'dare2ask/search.html', context_dict)
+			#
+	        # else:
+		    #     # The supplised form contained errors,
+		    #     # Print errors to terminal.
+	        #     print(formLec.errors)
 
-	# Check that a lecture exists.
+    # Check that lectures exist
     try:
-        lecture_list = Lecture.objects.order_by('-name')
+        lecture_list = Lecture.objects.order_by('-title')
+        context_dict['lectures'] = lecture_list
     except Lecture.DoesNotExist:
-        context_dict['lecture'] = None
+        context_dict['lectures'] = None
+
+    context_dict['form'] = formLec
 
     # Will handle the bad form, new form, or no form supplied cases
     # Will render the form with error messages
     return render(request, 'dare2ask/lecture.html', context_dict)
 
-def in_lecture(request, lecture_name_slug):
+def search(request, search_slug):
+	print(search_slug)
+	for lec in Lecture.objects.order_by('title'):
+		# if search_slug in
+		print(lec)
+	return HttpResponse("Hello")
 
+def in_lecture(request, lecture_name_slug):
+	form = QuestionForm()
+	context_dict = {'form': form}
+	try:
+		# Look for lecture name slug with given name.
+		# If not found, raise DoesNotExist exception.
+		# So the .get() method returns one model instance or
+		# raises an exception.
+		lecture = Lecture.objects.get(slug = lecture_name_slug)
+
+		# Retrieve all of the associated questions.
+		# filter() will return a list of question objects or empty list
+		questions = Question.objects.filter(lecture = lecture)
+
+		# Adds our results list to the template context under name pages.
+		context_dict['questions'] = questions
+
+		# We also add the lecture object from the DB to the context
+		# dictionary. We'll use this in the template to verify that
+		# the lecture exists.
+		context_dict['lecture'] = lecture
+	except Lecture.DoesNotExist:
+		# We get here if we didn't find the specified category
+		# Template will display "no category" message
+		context_dict['lecture'] = None
+
+	# To interact with questions
+	if request.method == 'POST':
+		print("REQUEST=",request.body,"\n",request.POST)
+		if "Create Question" in request.POST.get('create_question', 'None'):
+			form = QuestionForm(request.POST)
+			if form.is_valid():
+				q = form.save(commit=False)
+				q.lecture = context_dict['lecture']
+				q.save()
+			else:
+				print(form.errors)
+				'''elif "upvote_question" in request.POST:
+			# Get the current question
+			print("UPVOTING")
+			i = int(request.POST['upvote_question'])-1
+			question = context_dict["questions"][0]
+			question.upvotes += 1
+			question.save()'''
+		elif "answered_question" in request.POST:
+			i = int(request.POST['answered_question'])-1
+			question = context_dict["questions"][i]
+			if question.answered == True:
+				question.answered = False
+			else:
+				question.answered = True
+			question.save()
+		else:
+			print("UNRECOGNIZED")
+
+	return render(request, 'dare2ask/in_lecture.html', context=context_dict)
+
+#@is_staff
+def delete_conf(request, lecture_name_slug):
     context_dict = {}
 
     try:
-        # Look for category name slug with given name.
-        # If not found, raise DoesNotExist exception.
-        # So the .get() method returns one model instance or
-        # raises an exception.
         lecture = Lecture.objects.get(slug = lecture_name_slug)
 
-        # Retrieve all of the associated questions.
-        # filter() will return a list of page objects or empty list
-        #pages = Page.objects.filter(category = category)
-
-        # Adds our results list to the template context under name pages.
-        #context_dict['pages'] = pages
-
-        # We also add the category object from the DB to the context
-        # dictionary. We'll use this in the template to verify that
-        # the category exists.
         context_dict['lecture'] = lecture
 
     except Lecture.DoesNotExist:
-        # We get here if we didn't find the specified category
-        # Template will display "no category" message
         context_dict['lecture'] = None
-        #context_dict['pages'] = None
+        print('context_dict["lecture"]= None')
+    return render(request, 'dare2ask/delete_conf.html', context_dict)
 
-    return render(request, 'dare2ask/in_lecture.html', context=context_dict)
+def delete(request, lecture_name_slug):
+    lec = get_object_or_404(Lecture, slug = lecture_name_slug).delete()
+    return HttpResponseRedirect('/dare2ask')
+
+def delete_Q(request, lecture_name_slug, question_id):
+	lecture = Lecture.objects.get(slug = lecture_name_slug)
+
+	# Retrieve all of the associated questions.
+	# filter() will return a list of question objects or empty list
+	# qAll = Question.objects.all()
+	# print(qAll)
+	# questions = Question.objects.filter(lecture = lecture)
+
+	# print(questions)
+	Question.objects.filter(id = question_id).delete()
+	questions2 = Question.objects.filter(lecture = lecture)
+	# print(questions2)
+	return HttpResponseRedirect('/dare2ask/lecture/' + lecture_name_slug)
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -141,3 +220,69 @@ def visitor_cookie_handler(request):
 
 	# Update/set the visits cookie
 	request.session['visits'] = visits
+
+@login_required
+def register_profile(request):
+	form = UserProfileForm()
+	if request.method == 'POST':
+		form = UserProfileForm(request.POST, request.FILES)
+		if form.is_valid():
+			user_profile = form.save(commit=False)
+			user_profile.user = request.user
+			user_profile.save()
+			# if form.lecturer:
+			# 	userprofile.lecturer = True
+
+			return redirect('index')
+		else:
+			print(form.errors)
+
+	context_dict = {'form':form}
+
+	return render(request, 'dare2ask/profile_registration.html', context_dict)
+
+@login_required
+def profile(request, username):
+	try:
+		user = User.objects.get(username=username)
+	except User.DoesNotExist:
+		return redirect('index')
+
+	userprofile = UserProfile.objects.get_or_create(user=user)[0]
+	form = UserProfileForm(
+		{'picture': userprofile.picture, 'lecturer': userprofile.lecturer})
+
+	if request.method == 'POST':
+		form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+		if form.is_valid():
+			form.save(commit=True)
+			return redirect('dare2ask:profile', user.username)
+		else:
+			print(form.errors)
+
+	return render(request, 'dare2ask/profile.html',
+		{'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+
+@login_required
+def like_question(request):
+	l_id = None; # l_id == like_id
+	if request.method == 'GET':
+		l_id = request.GET['like_id'];  # getting "like_id" from the button in ajax.js
+		likes = 0;
+		all_likes = ""
+		if l_id:
+			q = Question.objects.get(id=int(l_id));
+			if q:
+				likes = q.upvotes + 1;
+				q.upvotes = likes;
+				q.save();
+				# Get parent lecture of question
+				l = q.lecture
+				# Get all questions with this parent lecture
+				all_qs = Question.objects.filter(lecture=l)
+				for n in all_qs:
+					print(n.upvotes)
+					all_likes += str(n.upvotes)
+					all_likes += " "
+	return HttpResponse(all_likes)

@@ -1,15 +1,123 @@
 <!DOCTYPE html>
 
+<script>
+function removeQ(id) {
+  document.getElementById("demo").innerHTML = "Hello World";
+}
+</script>
+
 {% extends 'dare2ask/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-  {{ lecture.title }}
+  {% if lecture.title %}
+    Lecture: {{ lecture.title }}
+  {% else %}
+    Lecture not found
+  {% endif %}
 {% endblock %}
 
-{% block body_block %}
-  <h1>Look at the questions!</h1>
-  <div>
-    QUESTIONS WILL GO HERE
-  </div>
+{% block header %}
+  {% if lecture.title %}
+    <h1>{{ lecture.title }}</h1>
+  {% else %}
+    <h1>Lecture not found!</h1>
+  {% endif %}
+{% endblock %}
+{% block headertext %}
+  {% if lecture.title %}
+    <div>
+      <form id="question_form" method="post"
+        action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+          {{ field.errors }}
+          {{ field.help_text}}
+          {{ field }}
+        {% endfor %}
+        <input class="button1" type="submit" name="create_question" value="Create Question" />
+      </form>
+    </div>
+    <br/>
+    <div>
+      {% if questions %}
+        <h3>Questions:</h3>
+          {% for question in questions %}
+              <a style="font-style: italic; font-size: 20px;">"{{ question.text }}"<br/></a>
+
+              <!--
+              <br>Votes: {{ question.upvotes }}
+               Upvote form only visible to students
+              <form id="upvote" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}">
+                {% csrf_token %}
+                <button type="submit" value="{{forloop.counter}}" name="upvote_question">Upvote</button>
+              </form>
+            -->
+
+            <!-- AJAX button goes here -->
+              <strong class="like_count">{{ question.upvotes }}</strong>
+              <button data-upvoteid="{{question.id}}"
+                class="button1 likes" type="button">
+                Like
+              </button>
+            <!-- END ajax button -->
+              <a style="position: absolute; right: 600px;">
+              {% if question.answered %} Answered
+              {% else %} Unanswered
+              {% endif %}
+              </a>
+              <!-- Answered form only visible to instructors -->
+              {% if user.userprofile.lecturer %}
+                <form id="answered" method="post" action="{% url 'dare2ask:in_lecture' lecture.slug %}" style="position: absolute; right: 575px;">
+                  {% csrf_token %}
+                  <button type="submit" name="answered_question" value="{{forloop.counter}}">
+                    Mark
+                    {% if question.answered %} Unanswered
+                    {% else %} Answered
+                    {% endif %}
+                  </button>
+                </form>
+                <!-- Delete question button -->
+                <button onclick="window.location.href =
+                  '/dare2ask/delete/{{lecture.slug}}/{{question.id}}';">X {{question.id }}</button>
+              {% endif %}
+              <br/><br/><br/>
+          {% endfor %}
+
+      {% else %}
+        <div>No questions have been asked</div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div>
+      A lecture with this name does not exist. </br>
+      <a href = "{% url 'dare2ask:lecture' %}">Try another </a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+
+<!-- Delete the lecture -->
+{% block headerlowright %}
+  {% if lecture.title %}
+    {% if user.userprofile.lecturer %}
+      <h1>Delete the lecture!</h1>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block textlowright %}
+  {% if lecture.title %}
+    {% if user.userprofile.lecturer %}
+      <button onclick="window.location.href =
+        '/dare2ask/delete/{{lecture.slug}}/confirm';">Delete!</button>
+    {% endif %}
+  {% endif %}
 {% endblock %}

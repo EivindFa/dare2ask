@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 
 {% extends "dare2ask/base.html" %}
-{% block body_block %}
+{% block title_block %}
+	Login
+{% endblock %}
+{% block header %}
 	<link href="http"//v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
-	<div class="jumbotron">
-		<h1 class="display-3">Login</h1>
+	<div class="reglog_banner"">
+		<h1 class="reglog_text">Login</h1>
 	</div>
+	{% endblock %}
+	{% block headertext %}
 	<form class="form-signin" role="form" method="post" action=".">
 		{% csrf_token %}
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<label for="inputUsername" class="sr-only">Username</label>
-		<input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>
-		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
-		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">
+		<h2 class="form-signin-heading">
+			Please sign in
+		</h2>
+		{% if form.errors %}
+			<div class="alert">Invalid credentials. Note that both fields may be case-sensitive.</div>
+		{% endif %}
+		<label for="inputUsername" class="sr-only">
+			Username
+		</label>
+		<input type="text" name="username" id="id_username" class="reglog_input" placeholder="Username" required autofocus>
+		<label for="inputPassword" class="sr-only">
+			Password
+		</label>
+		<input type="password" name="password" id="id_password" class="reglog_input" placeholder="Password" required>
+		<button class="button1" type="submit" value="Submit">
 			Sign in
 		</button>
-	</form><!-- 
-		{{ form.as_p }}
-		<input type="submit" value="Log in" />
-		<input type="hidden" name="next" value="{{ next }}" />
 	</form>
-	<p>
-		Not a member?
-		<a href="{% url 'registration_register' %}">Register</a>
-	</p> -->
+{% endblock %}
+{% block headerlowleft %}
+{% endblock %}
+{% block textlowleft %}
+{% endblock %}
+{% block headerlowright %}
+{% endblock %}
+{% block textlowright %}
 {% endblock %}

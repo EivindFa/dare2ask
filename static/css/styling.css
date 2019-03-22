@@ -1,0 +1,173 @@
+/*****
+  Code from http://v4-alpha.getbootstrap.com/examples/product/product.css
+*****/
+
+.container {
+  max-width: 960px;
+}
+
+/*
+ * Custom translucent site header
+ */
+
+.site-header {
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #fff;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #0cff00;
+  text-decoration: none;
+}
+
+/*
+ * Extra utilities
+ */
+
+.flex-equal > * {
+  -ms-flex: 1;
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+
+.overflow-hidden { overflow: hidden; }
+
+/*****
+  Custom code
+  Note: the colours from the logo are:
+  blue ; #05dcff
+  red : ff0000
+  yellow : fdff00
+  green : 0cff00
+*****/
+
+/*
+  The general button
+*/
+
+.button1{
+    font-size: 20px;
+     color: #0099CC;
+     background: transparent;
+     border: 2px solid #0099CC;
+     border-radius: 6px;
+     transition-duration: 0.4s;
+     cursor: pointer;
+
+   
+  }
+  .button1:hover {
+    color: #DA70D6;
+    background-color: #008CBA;
+    color: white;
+  }
+  .button1:active {
+    color: #DA70D6;
+    position:relative;
+    top:1px;
+  }
+
+/*****
+    Styling for about.html
+*****/
+
+.aboutUs{
+  margin:20px;
+  padding-bottom: 20px;
+}
+
+/*
+    Three columns
+*/
+.dev{
+  float:right;
+  width:33.3%;
+  font-family: Arial, Helvetica,sans-serif;
+  font-weight: normal;
+
+  padding-left:7px;
+  padding-right: 7px;
+  padding-bottom: 15px;
+}
+
+.dev img{
+  position: relative;
+  left:70px;
+  height: 100px;
+  width: 100px;
+
+}
+
+/*****
+    Styling for registration_form.html, profile_registration.html, and login.html
+*****/
+
+.reglog_input{display:block;
+ margin:auto;
+ width:50%;
+ padding:
+ .5rem 
+ .75rem;
+ font-size:1rem;
+ line-height:1
+ .25;
+ color:#464a4c;
+ background-color:#fff;
+ background-image:none;
+ -webkit-background-clip:padding-box;
+ background-clip:padding-box;
+ border:1px solid rgba(0,0,0,.15);
+ border-radius:.25rem;
+ -webkit-transition:border-color ease-in-out 
+ .15s,
+ -webkit-box-shadow ease-in-out 
+ .15s;
+ transition:border-color ease-in-out 
+ .15s,
+ -webkit-box-shadow ease-in-out 
+ .15s;
+ -o-transition:border-color ease-in-out 
+ .15s,
+ box-shadow ease-in-out 
+ .15s;
+ transition:border-color ease-in-out 
+ .15s,
+ box-shadow ease-in-out 
+ .15s;
+ transition:border-color ease-in-out 
+ .15s,
+ box-shadow ease-in-out 
+ .15s,
+ -webkit-box-shadow ease-in-out 
+ .15s}
+
+.reglog_text{
+  font-size:4.5rem;
+  font-weight:300;
+  line-height:1.2
+}
+
+.reglog_banner{padding:2rem 1rem;
+ width: 75%;
+ margin: auto;
+ margin-bottom:2rem;
+ background-color:#05dcff;
+ border-radius:
+ .3rem;}
+
+.helptext{
+  color: #ff0000;
+}
+
+.alert{
+  color: red;
+}
