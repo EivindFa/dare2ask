@@ -33,22 +33,20 @@ def populate():
 		 "upvotes":10,
 		 "answered":False},
 	]
-	print("questions created")
+
 	lectures = {"WAD": {"questions":WAD_questions, "join_ID":1},
 				"Robotics": {"questions":Robotics_questions, "join_ID":2}}
-	print("lectures created")
+
 	for lec, lec_data in lectures.items():
 		l = add_lecture(lec, lec_data["join_ID"])
 		for q in lec_data["questions"]:
 			add_question(l, q["text"], q["upvotes"], q["answered"])
-	print("here")
+
 	for l in Lecture.objects.all():
 		for q in Question.objects.filter(lecture=l):
 			print("- {0} - {1}".format(str(l), str(q)))
 
-
 def add_question(lec, text, upvotes, answered):
-	print("adding question")
 	q = Question.objects.get_or_create(lecture=lec, text=text)[0]
 	q.upvotes = upvotes
 	q.answered = answered
@@ -56,13 +54,9 @@ def add_question(lec, text, upvotes, answered):
 	return q
 
 def add_lecture(lecture, join_ID):
-	print("adding lecture")
 	l = Lecture.objects.get_or_create(title=lecture)[0]
-	print("1")
 	l.join_ID=join_ID
-	print("2")
 	l.save()
-	print("3")
 	return l
 
 
